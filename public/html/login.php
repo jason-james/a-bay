@@ -1,21 +1,19 @@
-<html lang="en">
+<?php require_once ("../../private/initialise.php") ?>
 
-<head>
+<?php include("../../private/shared/header.php")?>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    require("../../private/login_functions.php");
+}
 
-    <title>A-Bay: Sign In</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="../css/shop-homepage.css" rel="stylesheet">
-
-</head>
+// If already logged in, go straight to accounts page
+if (isset($_SESSION['logged_in'])) {
+    if ($_SESSION['logged_in'] == true) {
+        redirect_to('/public/html/account.php');
+    }
+}
+?>
 
 <body>
 <!-- Navigation -->
@@ -34,7 +32,11 @@
                     <a class="nav-link" href="account.php">Account</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Login</a>
+                    <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
+                        echo '<a class="nav-link" href="logout.php">Logout</a>';
+                    } else {
+                        echo '<a class="nav-link" href="login.php">Login</a>';
+                    }?>
                 </li>
             </ul>
         </div>
@@ -49,16 +51,16 @@
             <div class="card h-75 my-5">
                 <div class="card-body">
                     <h5 class="card-title text-center">Sign In</h5>
-                    <form>
+                    <form action="login.php" method="post">
                         <div class="form-group">
-                            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                            <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
                         </div>
 
                         <div class="form-group">
-                            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                            <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
                         </div>
 
-                        <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+                        <button class="btn btn-primary btn-block" type="submit" name="login">Sign in</button>
                     </form>
                 </div>
                 <div class="card-footer"><div CLASS="text-center">Don't have an account? <a href="registration.php">Register</a></div>

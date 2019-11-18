@@ -1,21 +1,6 @@
-<html lang="en">
 
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>A-Bay: COMP0022 CW</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="../css/shop-homepage.css" rel="stylesheet">
-
-</head>
+<?php require_once ("../../private/initialise.php") ?>
+<?php include("../../private/shared/header.php")?>
 
 <body>
 
@@ -35,7 +20,11 @@
                     <a class="nav-link" href="account.php">Account</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="login.php">Login</a>
+                    <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
+                        echo '<a class="nav-link" href="logout.php">Logout</a>';
+                    } else {
+                        echo '<a class="nav-link" href="login.php">Login</a>';
+                    }?>
                 </li>
             </ul>
         </div>
@@ -207,13 +196,9 @@
 </div>
 <!-- /.container -->
 
-<!-- Footer -->
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; A-Bay 2019</p>
-    </div>
-    <!-- /.container -->
-</footer>
+<!-- /.Footer -->
+<?php include("../../private/shared/footer.php")?>
+
 
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>

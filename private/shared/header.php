@@ -1,3 +1,4 @@
+<html lang="en">
 <head>
 
     <meta charset="utf-8">
@@ -8,9 +9,9 @@
     <title>A-Bay: COMP0022 CW</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../../public/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../css/shop-homepage.css" rel="stylesheet">
+    <link href="../../public/css/shop-homepage.css" rel="stylesheet">
 
 </head>

@@ -1,21 +1,6 @@
-<html lang="en">
+<?php require_once ("../../private/initialise.php") ?>
 
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>A-Bay: Search Results</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="../css/shop-homepage.css" rel="stylesheet">
-
-</head>
+<?php include("../../private/shared/header.php")?>
 
 <body>
 
@@ -35,7 +20,11 @@
                     <a class="nav-link" href="account.php">Account</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="login.php">Login</a>
+                    <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
+                        echo '<a class="nav-link" href="logout.php">Logout</a>';
+                    } else {
+                        echo '<a class="nav-link" href="login.php">Login</a>';
+                    }?>
                 </li>
             </ul>
         </div>
