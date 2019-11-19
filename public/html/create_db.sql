@@ -29,8 +29,10 @@ USE `abay`;
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE IF NOT EXISTS `account` (
                                          `user_id` int(16) NOT NULL AUTO_INCREMENT,
-                                         `username` varchar(30) NOT NULL,
+                                         `email` varchar(340) NOT NULL,
                                          `password` varchar(128) NOT NULL,
+                                         `hash` varchar(80) NOT NULL,
+                                         `active` BOOLEAN,
                                          PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -44,11 +46,11 @@ DROP TABLE IF EXISTS `addresses`;
 CREATE TABLE IF NOT EXISTS `addresses` (
                                            `address_id` int(16) NOT NULL AUTO_INCREMENT,
                                            `user_fk` int(16) NOT NULL,
-                                           `address1` int(120) NOT NULL,
-                                           `address2` int(120) DEFAULT NULL,
-                                           `city` int(100) NOT NULL,
-                                           `country` int(2) NOT NULL,
-                                           `postcode` int(12) NOT NULL,
+                                           `address1` varchar(240) NOT NULL,
+                                           `address2` varchar(240) DEFAULT NULL,
+                                           `city` varchar(100) NOT NULL,
+                                           `country` varchar(2) NOT NULL,
+                                           `postcode` varchar(12) NOT NULL,
                                            PRIMARY KEY (`address_id`),
                                            KEY `user_fk` (`user_fk`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -144,12 +146,11 @@ CREATE TABLE IF NOT EXISTS `seller` (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
                                       `user_fk` int(16) NOT NULL,
-                                      `first_name` int(40) NOT NULL,
-                                      `surname` int(40) NOT NULL,
-                                      `email` int(40) NOT NULL,
+                                      `first_name` varchar(40) NOT NULL,
+                                      `surname` varchar(40) NOT NULL,
+                                      `username` varchar(40) NOT NULL,
                                       `date_of_birth` date NOT NULL,
-                                      KEY `user_fk` (`user_fk`),
-                                      KEY `user_fk_2` (`user_fk`)
+                                      KEY `user_fk` (`user_fk`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
