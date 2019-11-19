@@ -14,5 +14,5 @@ function db_disconnect($connection) {
         mysqli_close($connection);
     }
 }
-
+// i suck dick
 ?>
