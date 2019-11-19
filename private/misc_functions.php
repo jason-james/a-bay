@@ -1,7 +1,7 @@
 <?php
 
 function redirect_to($location) {
-    header("Location: " . "/COMP0022" . $location);
+    header("Location: " . "/a-bay" . $location);
     exit;
 }
 
