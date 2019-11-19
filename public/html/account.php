@@ -59,7 +59,7 @@
                     <div class="card-header">Selling</div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><a href="#">Sell Item</a></li>
+                            <li class="list-group-item"><a href="create_item.php">Sell Item</a></li>
                             <li class="list-group-item"><a href="#">Active Listings</a></li>
                             <li class="list-group-item"><a href="#">Sold Items</a></li>
                             <li class="list-group-item"><a href="#">Unsold Items</a></li>
