@@ -25,4 +25,4 @@ require_once('database.php');
 require_once ('misc_functions.php');
 
 $db = db_connect();
-
+?>

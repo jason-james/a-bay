@@ -10,7 +10,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `abay`
+-- Database: `a-bay`
 --
 DROP DATABASE Abay;
 CREATE DATABASE IF NOT EXISTS `abay` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
