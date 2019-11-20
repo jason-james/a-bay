@@ -40,7 +40,7 @@
                     <div class="card-header">Bids for this item</div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><a href="<?php echo ?>">Latest bid:</a></li>
+                            <li class="list-group-item"><a href="#">Latest bid:</a></li>
                             <li class="list-group-item"><a href="#">Bid 4:</a></li>
                             <li class="list-group-item"><a href="#">Bid 3:</a></li>
                             <li class="list-group-item"><a href="#">Bid 2:</a></li>

@@ -34,7 +34,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="exampleModalLongTitle">Click to bid</h6>
+                    <h6 class="modal-title" id="exampleModalLongTitle">Enter amount and click submit to bid</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -44,14 +44,9 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">£</span>
                         </div>
-                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <form action="<?php echo url_for('/html/handle_bid_submit.php'); ?>" method="post">
-                        <input type="number" name="Enter bid amount" value=""/>
-                        <input type="submit" value="Click to submit bid" />
-                    </form>
+                        <form action="<?php echo url_for('/html/handle_bid_submit.php'); ?>" method="post" value="Click to submit bid">
+                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar) ">
+                        </form>
                 </div>
             </div>
         </div>
