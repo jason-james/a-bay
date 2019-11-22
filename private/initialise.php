@@ -23,6 +23,7 @@ require_once('database.php');
 
 // Let our functions be accessible by whole app
 require_once ('misc_functions.php');
+require_once ('deji_query_functions.php');
 
-$db = db_connect();
+$db = db_connect();  // so when any page loads initialize.php, it loads up these functions and initiates the first function
 ?>

@@ -1,6 +1,25 @@
+<!-- to create a list of bids for a particular item -->
 <?php require_once ("../../private/initialise.php") ?>
 
 <?php include("../../private/shared/header.php")?>
+
+<?php
+// to connect this file to local database
+
+$sql = "";
+
+$dbhost = 'localhost';
+$dbuser = 'root';
+$dbpass = '';
+$dbname = 'a-bay';
+
+$connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname); //connects to database
+
+//perfrom database query
+
+$bid_set = get_list_of_bids();  // uses the function created in deji_query_functions.php to get the results of the query
+
+?>
 
 <body>
     <!-- Navigation -->
@@ -25,31 +44,38 @@
                             echo '<a class="nav-link" href="login.php">Login</a>';
                         }?>
                     </li>
+
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!---List of bids--->
 
-    <div class="row mb-2">
-        <div class="col-lg-8">
+    <table class="list">
+        <tr>
+            <th>Bid id</th>
+            <th>Bid Amount</th>
+            <th>Time of bid</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
 
-            <div class="row my-4">
-                <div class="card h-100 w-100">
-                    <div class="card-header">Bids for this item</div>
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><a href="#">Latest bid:</a></li>
-                            <li class="list-group-item"><a href="#">Bid 4:</a></li>
-                            <li class="list-group-item"><a href="#">Bid 3:</a></li>
-                            <li class="list-group-item"><a href="#">Bid 2:</a></li>
-                            <li class="list-group-item"><a href="#">Bid 1:</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-    </div>
-</div>
+        <?php while($bid = mysqli_fetch_assoc($bid_set)) { ?>
+            <tr>
+                <td><?php echo $bid['Bid id']; ?></td>
+                <td><?php echo $bid['Bid Amount']; ?></td>
+                <td><?php echo $bid['Time of bid']; ?></td>
+            </tr>
+        <?php } ?>
+    </table>
 
+
+
+<?php
+mysqli_free_result($bid_set);      //release returned data
+?>
+<?php
+mysqli_close($connection)
+?>
 </body>

@@ -34,7 +34,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="exampleModalLongTitle">Enter amount and click submit to bid</h6>
+                    <h6 class="modal-title" id="exampleModalLongTitle">Make bid</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -44,9 +44,11 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">£</span>
                         </div>
-                        <form action="<?php echo url_for('/html/handle_bid_submit.php'); ?>" method="post" value="Click to submit bid">
-                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar) ">
-                        </form>
+                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Click here to Submit bid</button>
                 </div>
             </div>
         </div>
@@ -97,7 +99,7 @@
     </div>
     <div class="row my-4">
         <div class="col-sm-5">
-            <img id="item-display" src="https://media.karousell.com/media/photos/products/2018/10/06/corsair_gs600_80plus_psu_1538780922_81e254d1.jpg" height="375" width="450" alt=""></img>
+            <img id="item-display" src="https://media.karousell.com/media/photos/products/2018/10/06/corsair_gs600_80plus_psu_1538780922_81e254d1.jpg" height="375" width="450" alt=""</img>
         </div>
 
         <div class="col-sm-7">
@@ -246,5 +248,3 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
-
-
