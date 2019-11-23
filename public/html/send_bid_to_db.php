@@ -9,9 +9,9 @@ if (is_post_request()) {
     $query = "INSERT INTO bid (bid_amount) VALUES ($bid_value)";
     $result = mysqli_query($db, $query);
 
-    // to redirect to list of bids after bidding:
+    // to redirect to list of bids after bidding has been entered:
     if ($result) {
-        redirect_to(url_for('/html/bids_for_this_item.php'));
+        redirect_to('/public/html/bids_for_this_item.php');
 
     } else {
       echo mysqli_error($db);

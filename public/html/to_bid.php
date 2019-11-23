@@ -47,7 +47,7 @@
                             <div class="input-group-prepend">
                             <span class="input-group-text">£</span>
                             </div>
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)"/>  <!--can change the type of box here -->
+                        <input type="number" name="bid_amount" value="""/>  <!--can change the type of box here -->
                         <input type="submit" value="Click here to Submit bid"/>
                         </div>
                     </form>
