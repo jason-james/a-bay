@@ -34,21 +34,24 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="exampleModalLongTitle">Make bid</h6>
+                    <h6 class="modal-title" id="exampleModalLongTitle">State your price</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
+<!-- this is the form to enter a bid amount -->
                 <div class="modal-body">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
+                    <form action= "<?php echo url_for('/html/send_bid_to_db.php')?>" method="post">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
                             <span class="input-group-text">£</span>
+                            </div>
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)"/>  <!--can change the type of box here -->
+                        <input type="submit" value="Click here to Submit bid"/>
                         </div>
-                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Click here to Submit bid</button>
+                    </form>
+<!--------------------------------------------->
                 </div>
             </div>
         </div>

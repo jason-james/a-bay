@@ -6,8 +6,6 @@
 <?php
 // to connect this file to local database
 
-$sql = "";
-
 $dbhost = 'localhost';
 $dbuser = 'root';
 $dbpass = '';
@@ -51,25 +49,42 @@ $bid_set = get_list_of_bids();  // uses the function created in deji_query_funct
     </nav>
 
 
-    <table class="list">
-        <tr>
-            <th>Bid id</th>
-            <th>Bid Amount</th>
-            <th>Time of bid</th>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
-        </tr>
 
-        <?php while($bid = mysqli_fetch_assoc($bid_set)) { ?>
-            <tr>
-                <td><?php echo $bid['Bid id']; ?></td>
-                <td><?php echo $bid['Bid Amount']; ?></td>
-                <td><?php echo $bid['Time of bid']; ?></td>
-            </tr>
-        <?php } ?>
-    </table>
 
+    <!---List of bids--->
+
+    <div class="row mb-2">
+        <div class="col-lg-8">
+
+            <div class="row my-4">
+                <div class="card h-100 w-75">
+                    <div class="card-header" align="m">Bids for this item</div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <table class="list">
+                                <tr>            <!-- table has been inserted into card-->
+                                    <th>Bid ID</th>
+                                    <th>Bid Price (£)</th>
+                                    <th>Time of Bid</th>
+                                    <th>&nbsp</th>
+                                    <th>&nbsp;</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+
+                                <?php while($bid = mysqli_fetch_assoc($bid_set)) { ?>   <!-- while able to fetch a result from the bid_set, go through each-->
+                                    <tr>
+                                        <td><?php echo $bid['bid_id']; ?></td>
+                                        <td><?php echo $bid['bid_amount']; ?></td>
+                                        <td><?php echo $bid['bid_timestamp']; ?></td>
+                                    </tr>
+                                <?php } ?>
+                            </table>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 <?php
