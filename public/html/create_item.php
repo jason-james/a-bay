@@ -30,7 +30,7 @@
   <div class="subject new">
     <h1>Create Item</h1>
 
-<form action="" method="post"> // action is where the form will be submitted
+<form action="" method="post"> <!--// action is where the form will be submitted-->
     <div class="form-group">
     <dt>Item name</dt>
         <textarea type="text" name="item_name"  placeholder="Item Name..." cols = "50" rows = "1" ></textarea>

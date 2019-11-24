@@ -98,8 +98,10 @@ CREATE TABLE IF NOT EXISTS `item` (
                                       `size` varchar(30) NOT NULL,
                                       `location` int(16) NOT NULL,
                                       `category` varchar(40) NOT NULL,
+                                      `seller_fk` int(16) NOT NULL,
                                       PRIMARY KEY (`item_id`),
-                                      KEY `location` (`location`)
+                                      KEY `location` (`location`),
+                                      KEY `seller_fk` (`seller_fk`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
