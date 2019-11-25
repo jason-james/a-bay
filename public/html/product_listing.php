@@ -1,3 +1,4 @@
+<!--when item has been selected, details of the item is presented here-->
 <?php require_once ("../../private/initialise.php") ?>
 
 <?php include("../../private/shared/header.php")?>
