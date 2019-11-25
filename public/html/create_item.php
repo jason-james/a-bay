@@ -30,7 +30,7 @@
   <div class="subject new">
     <h1>Create Item</h1>
 
-<form action="" method="post"> <!--// action is where the form will be submitted-->
+<form action="insert_item_info.php" method="post"> <!--// action is where the form will be submitted-->
     <div class="form-group">
     <dt>Item name</dt>
         <textarea type="text" name="item_name"  placeholder="Item Name..." cols = "50" rows = "1" ></textarea>
@@ -42,7 +42,7 @@
   <dl>
     <dt>Condition</dt>
     <dd>
-      <select name="Condition">
+      <select name="condition">
         <option> New </option>
         <option> New (Other) </option>
         <option> Used </option>
@@ -51,7 +51,11 @@
   </dl>
     <dl>
         <dt>Descirption</dt>
-        <textarea type="text" name="decription" placeholder="Description..." rows = "5" cols="100"></textarea>
+        <textarea type="text" name="description" placeholder="Description..." rows = "5" cols="100"></textarea>
+    </dl>
+    <dl>
+        <dt>Category</dt>
+        <textarea type="text" name="category" placeholder="Category..." rows = "1" cols="100"></textarea>
     </dl>
     <dl>
         <dt>Size</dt>
@@ -71,7 +75,7 @@
     </div>
     <div class="form-group row">
         <label class="col-2 col-form-label">End Date</label>
-            <input  type="datetime-local" >
+            <input  type="datetime-local" name = "end_date" >
     </div>
     <div id="operations">
     <input type="submit" value="Create Listing" />

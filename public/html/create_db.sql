@@ -94,10 +94,11 @@ CREATE TABLE IF NOT EXISTS `buyer` (
 DROP TABLE IF EXISTS `item`;
 CREATE TABLE IF NOT EXISTS `item` (
                                       `item_id` int(16) NOT NULL AUTO_INCREMENT,
+                                      `item_name` varchar(120) NOT NULL,
                                       `description` text NOT NULL,
                                       `size` varchar(30) NOT NULL,
                                       `location` int(16) NOT NULL,
-                                      `condition` varchar(12) NOT NULL,
+                                      `state` varchar(12) NOT NULL,
                                       `category` varchar(40) NOT NULL,
                                       `seller_fk` int(16) NOT NULL,
                                       PRIMARY KEY (`item_id`),
