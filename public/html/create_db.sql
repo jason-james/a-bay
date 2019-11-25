@@ -97,12 +97,11 @@ CREATE TABLE IF NOT EXISTS `item` (
                                       `item_name` varchar(120) NOT NULL,
                                       `description` text NOT NULL,
                                       `size` varchar(30) NOT NULL,
-                                      `location` int(16) NOT NULL,
+                                      `location` varchar(2) NOT NULL,
                                       `state` varchar(12) NOT NULL,
                                       `category` varchar(40) NOT NULL,
                                       `seller_fk` int(16) NOT NULL,
                                       PRIMARY KEY (`item_id`),
-                                      KEY `location` (`location`),
                                       KEY `seller_fk` (`seller_fk`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -117,12 +116,12 @@ CREATE TABLE IF NOT EXISTS `listing` (
                                          `listing_id` int(16) NOT NULL AUTO_INCREMENT,
                                          `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                          `end_time` timestamp NOT NULL,
-                                         `number_of_bids` int(11) NOT NULL,
+                                         `number_of_bids` int(11) NOT NULL ,
                                          `latest_bid_amount` int(11) NOT NULL,
                                          `number_watching` int(11) NOT NULL,
                                          `buy_now_price` double NOT NULL,
                                          `starting_price` double NOT NULL,
-                                         `winning_bid` int(16) NOT NULL,
+                                         `winning_bid` int(16) ,
                                          `item_id` int(16) NOT NULL,
                                          PRIMARY KEY (`listing_id`),
                                          KEY `winning_bid` (`winning_bid`),
@@ -181,12 +180,6 @@ ALTER TABLE `buyer`
     ADD CONSTRAINT `buyer_ibfk_1` FOREIGN KEY (`buyer_fk`) REFERENCES `account` (`user_id`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `item`
---
-ALTER TABLE `item`
-    ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`location`) REFERENCES `addresses` (`address_id`);
-
---
 -- Constraints for table `listing`
 --
 ALTER TABLE `listing`
@@ -198,6 +191,12 @@ ALTER TABLE `listing`
 --
 ALTER TABLE `seller`
     ADD CONSTRAINT `seller_ibfk_1` FOREIGN KEY (`seller_fk`) REFERENCES `account` (`user_id`);
+
+--
+-- Constraints for table `item`
+--
+ALTER TABLE `item`
+    ADD CONSTRAINT `seller_ibfk_2` FOREIGN KEY (`seller_fk`) REFERENCES `account` (`user_id`);
 
 --
 -- Constraints for table `user`
