@@ -6,16 +6,16 @@
 <?php
 // to connect this file to local database
 
-$dbhost = 'localhost';
-$dbuser = 'root';
-$dbpass = '';
-$dbname = 'a-bay';
+//$dbhost = 'localhost';
+//$dbuser = 'root';
+//$dbpass = '';
+//$dbname = 'a-bay';
 
-$connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname); //connects to database
+//$connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname); //connects to database. This section is not needed as its already connected to the database
 
 //perfrom database query
 
-$bid_set = get_list_of_bids();  // uses the function created in deji_query_functions.php to get the results of the query
+$bid_set = get_list_of_bids($db);  // uses the function created in deji_query_functions.php to get the results of the query
 
 ?>
 
@@ -91,6 +91,6 @@ $bid_set = get_list_of_bids();  // uses the function created in deji_query_funct
 mysqli_free_result($bid_set);      //release returned data
 ?>
 <?php
-mysqli_close($connection)
+mysqli_close($db)
 ?>
 </body>
