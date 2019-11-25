@@ -4,18 +4,8 @@
 <?php include("../../private/shared/header.php")?>
 
 <?php
-// to connect this file to local database
 
-//$dbhost = 'localhost';
-//$dbuser = 'root';
-//$dbpass = '';
-//$dbname = 'a-bay';
-
-//$connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname); //connects to database. This section is not needed as its already connected to the database
-
-//perfrom database query
-
-$bid_set = get_list_of_bids($db);  // uses the function created in deji_query_functions.php to get the results of the query
+$bid_set = get_list_of_bids($db, $_GET['item_id']);  // uses the function created in deji_query_functions.php to get the results of the query
 
 ?>
 
@@ -48,22 +38,17 @@ $bid_set = get_list_of_bids($db);  // uses the function created in deji_query_fu
         </div>
     </nav>
 
-
-
-
     <!---List of bids--->
+<div class="container">
 
-    <div class="row mb-2">
-        <div class="col-lg-8">
-
-            <div class="row my-4">
+            <div class="row my-4 justify-content-center">
+                <div class="col-lg-8">
                 <div class="card h-100 w-75">
                     <div class="card-header" align="m">Bids for this item</div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
                             <table class="list">
                                 <tr>            <!-- table has been inserted into card-->
-                                    <th>Bid ID</th>
                                     <th>Bid Price (£)</th>
                                     <th>Time of Bid</th>
                                     <th>&nbsp</th>
@@ -73,7 +58,6 @@ $bid_set = get_list_of_bids($db);  // uses the function created in deji_query_fu
 
                                 <?php while($bid = mysqli_fetch_assoc($bid_set)) { ?>   <!-- while able to fetch a result from the bid_set, go through each-->
                                     <tr>
-                                        <td><?php echo $bid['bid_id']; ?></td>
                                         <td><?php echo $bid['bid_amount']; ?></td>
                                         <td><?php echo $bid['bid_timestamp']; ?></td>
                                     </tr>
@@ -84,7 +68,8 @@ $bid_set = get_list_of_bids($db);  // uses the function created in deji_query_fu
                 </div>
             </div>
         </div>
-    </div>
+</div>
+
 
 
 <?php

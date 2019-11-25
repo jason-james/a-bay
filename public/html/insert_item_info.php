@@ -49,6 +49,7 @@ if($result_set1) {
     $sql2 .= "'" . $item_id . "'" ;
     $sql2 .= ");";
     $result_set2 = mysqli_query($db, $sql2);
+    $listing_id = mysqli_insert_id($db);
 
     if($result_set2) {
         redirect_to('/public/html/product_listing.php?item_id=' . $item_id);

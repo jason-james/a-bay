@@ -14,11 +14,6 @@ $seller_fk = $item_details ['seller_fk'];
 $query = "SELECT username FROM user where user_fk = $seller_fk";
 $query_res = mysqli_query($db, $query);
 $seller_details = $query_res -> fetch_assoc();
-
-
-$bidder_fk = $_SESSION['user_id'];
-$bid_on_fk = $item_details['item_id'];
-
 ?>
 
 <body>
@@ -48,7 +43,7 @@ $bid_on_fk = $item_details['item_id'];
     </div>
 </nav>
 <div class="container">
-    <!-- Modal -->
+<!-- Modal -->
     <div class="modal fade" id="bidModal" tabindex="-1" role="dialog" aria-labelledby="bidModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -58,20 +53,20 @@ $bid_on_fk = $item_details['item_id'];
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-
                 <div class="modal-body">
-                    <form action= "<?php echo url_for('/html/send_bid_to_db.php')?>" method="post">
-                        <div class="input-group mb-3">
+                        <form action="<?php echo url_for('/html/send_bid_to_db.php?item_id=' . $item_id)?>" method="post">
+                            <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">£</span>
                             </div>
-                            <input type="number" class="form-control" aria-label="Amount (to the nearest dollar) name = "bid_amount">
-                            <input type="submit" value="Click here to Submit bid"/>
-                        </div>
+                            <input type="text" required class="form-control" name="bid_amount" aria-label="Amount (to the nearest dollar)">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary">Submit bid</button>
+                            </div>
+                        </form>
+
+                    </div>
                 </div>
-                </form>
-
-
 
             </div>
         </div>
@@ -152,8 +147,7 @@ $bid_on_fk = $item_details['item_id'];
             <!-- Card content -->
             <div class="card-body">
                 <!-- Title -->
-                <h5 class="card-subtitle"><a><?php echo $seller_details['username'];
-                        ?></a></h5>
+                <h5 class="card-subtitle"><a><?php echo $seller_details['username']; ?></a></h5>
                 <!-- Data -->
                 <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
 
@@ -168,6 +162,24 @@ $bid_on_fk = $item_details['item_id'];
         <!-- Card -->
     </div>
     </div>
+
+<!-- Item details e.g. size etc -->
+
+<div class="row my-4">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h4>Item Details</h4>
+                <p><strong>Name:</strong> <?php echo $item_details['item_name']?></p>
+                <p><strong>Size:</strong> <?php echo $item_details['size']?></p>
+                <p><strong>Location:</strong> <?php echo $item_details['location']?></p>
+                <p><strong>Condition:</strong> <?php echo $item_details['state']?></p>
+                <p><strong>Category:</strong> <?php echo $item_details['category']?></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Item description -->
 
     <div class="row my-4">
         <div class="col">
