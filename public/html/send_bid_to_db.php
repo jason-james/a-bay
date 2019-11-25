@@ -6,7 +6,7 @@ if (is_post_request()) {
 
     $bid_value = $_POST['bid_amount'] ?? '';
 
-    $query = "INSERT INTO bid (bid_amount) VALUES ($bid_value)";
+    $query = "INSERT INTO bid (bid_amount, bidder_fk, bid_on_fk) VALUES ($bid_value, $bidder_fk, $bid_on_fk)";
     $result = mysqli_query($db, $query);
 
     // to redirect to list of bids after bidding has been entered:
