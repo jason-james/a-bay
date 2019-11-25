@@ -51,7 +51,7 @@ if($result_set1) {
     $result_set2 = mysqli_query($db, $sql2);
 
     if($result_set2) {
-        return true;
+        redirect_to('/public/html/product_listing.php?item_id=' . $item_id);
     } else {
         echo mysqli_error($db);
         db_disconnect($db);

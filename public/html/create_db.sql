@@ -106,6 +106,16 @@ CREATE TABLE IF NOT EXISTS `item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+--
+-- Table structure for table `watchlist`
+--
+DROP TABLE IF EXISTS `watchlist`;
+CREATE TABLE IF NOT EXISTS `watchlist` (
+                                           `user_fk` int(16) NOT NULL,
+                                           `listing_watched_fk` int(16) NOT NULL,
+                                           KEY `user_fk` (`user_fk`),
+                                           KEY `listing_watched_fk` (`listing_watched_fk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `listing`
@@ -199,11 +209,21 @@ ALTER TABLE `item`
     ADD CONSTRAINT `seller_ibfk_2` FOREIGN KEY (`seller_fk`) REFERENCES `account` (`user_id`);
 
 --
+-- Constraints for table `watchlist`
+--
+ALTER TABLE `watchlist`
+    ADD CONSTRAINT `watchlist_ibfk_1` FOREIGN KEY (`user_fk`) REFERENCES `account` (`user_id`) ON UPDATE CASCADE,
+    ADD CONSTRAINT `watchlist_ibfk_2` FOREIGN KEY (`listing_watched_fk`) REFERENCES `listing` (`listing_id`) ON UPDATE CASCADE;
+COMMIT;
+
+--
 -- Constraints for table `user`
 --
 ALTER TABLE `user`
     ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`user_fk`) REFERENCES `account` (`user_id`) ON UPDATE CASCADE;
 COMMIT;
+
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

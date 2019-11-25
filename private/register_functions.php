@@ -53,8 +53,8 @@ if (check_exists($db, "SELECT * FROM user WHERE username ='$username'") == true)
     }
 
     $id = mysqli_insert_id($db); // Store most recent user_id for use as foreign key
-
-    // Insert into user table the username, first name and last name
+    $_SESSION['user_id'] = $id; // Set user_id in session
+        // Insert into user table the username, first name and last name
     $query = "INSERT INTO user (user_fk, first_name, surname, username, date_of_birth) " . "VALUES ('$id', '$first_name', '$last_name', '$username', '$dob' )";
     mysqli_query($db, $query);
 
