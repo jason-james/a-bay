@@ -4,6 +4,20 @@
 <?php include("../../private/shared/header.php")?>
 
 <?php
+// Adds watch and unwatch functionality
+if (is_post_request() && isset($_POST['watch']) ) {
+    echo "set";
+    $listing_id = $_GET['listing_id'];
+    $user_id = $_SESSION['user_id'];
+    $query = "INSERT into watchlist (user_fk, listing_watched_fk) " . "VALUES ($user_id, $listing_id)";
+    mysqli_query($db, $query);
+} else if (is_post_request() && isset($_POST['unwatch']) ){
+    $listing_id = $_GET['listing_id'];
+    $user_id = $_SESSION['user_id'];
+    $query = "DELETE from watchlist where user_fk = $user_id AND listing_watched_fk = $listing_id";
+    mysqli_query($db, $query);
+}
+
 $item_id = $_GET['item_id'];
 $listing_id = $_GET['listing_id'];
 
@@ -145,18 +159,32 @@ $listing_details = $query_res -> fetch_assoc();
 
         <div class="btn-group cart">
             <button type="button" class="btn btn-success">
-                 Buy now
+                <i class="fas fa-shopping-bag mr-2"></i>Buy now
             </button>
         </div>
         <div class="btn-group cart">
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#bidModal">
-                Make bid
+                <i class="fas fa-credit-card mr-2"></i>Make bid
             </button>
         </div>
         <div class="btn-group wishlist my-2">
-            <button type="button" class="btn btn-outline-dark">
-                Add to wishlist
-            </button>
+            <?php
+            $user_id = $_SESSION['user_id'];
+            $qry = "SELECT * from watchlist where user_fk = $user_id AND listing_watched_fk = $listing_id";
+            $res = mysqli_query($db, $qry);?>
+            <?php if ($res -> num_rows == 0): ?>
+                <form class="mt-3" action="<?php echo "product_listing.php?item_id=" . $item_id . "&listing_id=" . $listing_id ?>" method="post">
+                    <button type="submit" name="watch" id="watch" class="btn btn-outline-dark">
+                        <i class="fas fa-eye mr-2"></i>Watch item
+                    </button>
+                </form>
+            <?php else : ?>
+                <form class="mt-3" action="<?php echo "product_listing.php?item_id=" . $item_id . "&listing_id=" . $listing_id ?>" method="post">
+                    <button type="submit" name="unwatch" id="unwatch" class="btn btn-outline-dark">
+                        <i class="fas fa-eye mr-2"></i>Unwatch
+                    </button>
+                </form>
+              <?php endif ?>
         </div>
         <!-- Card -->
 
