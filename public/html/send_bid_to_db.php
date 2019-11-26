@@ -6,13 +6,14 @@ if (is_post_request()) {
 
     $bid_value = $_POST['bid_amount'] ?? '';
     $bidder_fk = $_SESSION['user_id'];
-    $bid_on_fk = $_GET['item_id'];
+    $bid_on_fk = $_GET['listing_id'];
+
     $query = "INSERT INTO bid (bid_amount, bidder_fk, bid_on_fk) VALUES ('$bid_value', '$bidder_fk', '$bid_on_fk')";
     $result = mysqli_query($db, $query);
 
     // to redirect to list of bids after bidding has been entered:
     if ($result) {
-        redirect_to('/public/html/bids_for_this_item.php?item_id=' . $bid_on_fk);
+        redirect_to('/public/html/bids_for_this_item.php?listing_id=' . $bid_on_fk);
 
     } else {
       echo mysqli_error($db);

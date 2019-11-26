@@ -5,6 +5,7 @@
 
 <?php
 $item_id = $_GET['item_id'];
+$listing_id = $_GET['listing_id'];
 
 $query = "SELECT * from item where item_id = $item_id";
 $query_res = mysqli_query($db, $query);
@@ -14,6 +15,10 @@ $seller_fk = $item_details ['seller_fk'];
 $query = "SELECT username FROM user where user_fk = $seller_fk";
 $query_res = mysqli_query($db, $query);
 $seller_details = $query_res -> fetch_assoc();
+
+$query = "SELECT * from listing where listing_id = $listing_id";
+$query_res = mysqli_query($db, $query);
+$listing_details = $query_res -> fetch_assoc();
 ?>
 
 <body>
@@ -54,7 +59,7 @@ $seller_details = $query_res -> fetch_assoc();
                     </button>
                 </div>
                 <div class="modal-body">
-                        <form action="<?php echo url_for('/html/send_bid_to_db.php?item_id=' . $item_id)?>" method="post">
+                        <form action="<?php echo url_for('/html/send_bid_to_db.php?item_id=' . $item_id . "&listing_id=" . $listing_id)?>" method="post">
                             <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">£</span>
@@ -123,8 +128,21 @@ $seller_details = $query_res -> fetch_assoc();
     <div class="col-sm-7">
         <div class="h5"><?php echo $item_details['item_name'] ?> </div>
         <hr>
-        <div class="product-price">Current bid: <span><strong>$ 1234.00</strong></span></div>
-        <div class="product-price">Buy it now: <span><strong>$ 2145.00</strong></span></div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="product-price">Starting price: <span><strong>£ <?php echo $listing_details['starting_price']?></strong></span></div>
+                <div class="product-price">Current bid: <span><strong><?php echo ('£' . $listing_details['latest_bid_amount'] > 0 ? $listing_details['latest_bid_amount'] : 'No Bids')?></strong></span></div>
+                <div class="product-price">Buy it now: <span><strong>£ <?php echo $listing_details['buy_now_price']?></strong></span></div>
+            </div>
+            <div class="col-md-6">
+                <div class="product-price">Start date: <span><strong><?php echo $listing_details['start_time']?></strong></span></div>
+                <div class="product-price">End date: <span><strong><?php echo $listing_details['end_time']?></strong></span></div>
+                <div class="product-price">Number of watchers: <span><strong><?php echo $listing_details['number_watching']?></strong></span></div>
+            </div>
+        </div>
+
+
+
         <div class="btn-group cart">
             <button type="button" class="btn btn-success">
                  Buy now

@@ -5,7 +5,7 @@
 
 <?php
 
-$bid_set = get_list_of_bids($db, $_GET['item_id']);  // uses the function created in deji_query_functions.php to get the results of the query
+$bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function created in deji_query_functions.php to get the results of the query
 
 ?>
 
@@ -51,15 +51,22 @@ $bid_set = get_list_of_bids($db, $_GET['item_id']);  // uses the function create
                                 <tr>            <!-- table has been inserted into card-->
                                     <th>Bid Price (£)</th>
                                     <th>Time of Bid</th>
+                                    <th>Bidder</th>
                                     <th>&nbsp</th>
                                     <th>&nbsp;</th>
                                     <th>&nbsp;</th>
                                 </tr>
 
-                                <?php while($bid = mysqli_fetch_assoc($bid_set)) { ?>   <!-- while able to fetch a result from the bid_set, go through each-->
+                                <?php while($bid = mysqli_fetch_assoc($bid_set)) {
+                                    $bidder = $bid['bidder_fk'];
+                                    $res = mysqli_query($db, "SELECT username from user where user_fk = $bidder");
+                                    $bidder = $res -> fetch_assoc();
+                                    $bidder = $bidder['username']
+                                    ?>   <!-- while able to fetch a result from the bid_set, go through each and get username, bid amount and timestamp-->
                                     <tr>
                                         <td><?php echo $bid['bid_amount']; ?></td>
                                         <td><?php echo $bid['bid_timestamp']; ?></td>
+                                        <td><?php echo $bidder; ?></td>
                                     </tr>
                                 <?php } ?>
                             </table>

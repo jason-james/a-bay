@@ -52,7 +52,7 @@ if($result_set1) {
     $listing_id = mysqli_insert_id($db);
 
     if($result_set2) {
-        redirect_to('/public/html/product_listing.php?item_id=' . $item_id);
+        redirect_to('/public/html/product_listing.php?item_id=' . $item_id . "&listing_id=" . $listing_id);
     } else {
         echo mysqli_error($db);
         db_disconnect($db);
