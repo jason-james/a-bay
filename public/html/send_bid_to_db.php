@@ -27,9 +27,7 @@ if (is_post_request()) {
         $subject = "Someone has bid on an item you're watching";
         $message = "Someone made a new highest bid on an item on your watchlist, make sure you outbid them to win the auction! The highest bid amount is now " . $bid_value . " GBP.";
         if (!mail($to, $subject, $message, $headers)) {
-            echo "Mail returned false";
             $errorMessage = error_get_last()['message'];
-            die();
         }
     }
 
