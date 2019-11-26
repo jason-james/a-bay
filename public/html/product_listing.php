@@ -145,7 +145,7 @@ $listing_details = $query_res -> fetch_assoc();
         <div class="row">
             <div class="col-md-6">
                 <div class="product-price">Starting price: <span><strong>£ <?php echo $listing_details['starting_price']?></strong></span></div>
-                <div class="product-price">Current bid: <span><strong><?php echo ('£' . $listing_details['latest_bid_amount'] > 0 ? $listing_details['latest_bid_amount'] : 'No Bids')?></strong></span></div>
+                <div class="product-price">Current bid: <span><strong><?php echo ( $listing_details['latest_bid_amount'] > 0 ? '£ '. $listing_details['latest_bid_amount'] : 'No Bids')?></strong></span></div>
                 <div class="product-price">Buy it now: <span><strong>£ <?php echo $listing_details['buy_now_price']?></strong></span></div>
             </div>
             <div class="col-md-6">

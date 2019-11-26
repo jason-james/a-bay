@@ -4,11 +4,40 @@ require_once('../../private/initialise.php');
 
 if (is_post_request()) {
 
+
     $bid_value = $_POST['bid_amount'] ?? '';
     $bidder_fk = $_SESSION['user_id'];
     $bid_on_fk = $_GET['listing_id'];
 
+    // Get watchlist and send email to everyone on it
+
+    $query = "select w.*, a.email 
+            from watchlist w 
+            inner join account a on a.user_id  = w.user_fk 
+            where w.listing_watched_fk = $bid_on_fk";
+
+    $res = mysqli_query($db, $query);
+    $email = "jasontest797@gmail.com";
+    while($row = mysqli_fetch_assoc($res))
+    {
+        $headers = 'From: ' .$email . "\r\n".
+            'Reply-To: ' . $email. "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+        $to = $row['email'];
+        $subject = "Someone has bid on an item you're watching";
+        $message = "Someone made a new highest bid on an item on your watchlist, make sure you outbid them to win the auction! The highest bid amount is now " . $bid_value . " GBP.";
+        if (!mail($to, $subject, $message, $headers)) {
+            echo "Mail returned false";
+            $errorMessage = error_get_last()['message'];
+            die();
+        }
+    }
+
     $query = "INSERT INTO bid (bid_amount, bidder_fk, bid_on_fk) VALUES ('$bid_value', '$bidder_fk', '$bid_on_fk')";
+    $result = mysqli_query($db, $query);
+
+
+    $query = "UPDATE listing SET latest_bid_amount = $bid_value WHERE listing_id=$bid_on_fk";
     $result = mysqli_query($db, $query);
 
     // to redirect to list of bids after bidding has been entered:
@@ -21,6 +50,4 @@ if (is_post_request()) {
       exit;
     }
 
-}   else {
-    redirect_to(url_for('/html/to_bid.php'));
 }
