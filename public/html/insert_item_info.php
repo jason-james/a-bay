@@ -1,6 +1,7 @@
 <?php require_once ("../../private/initialise.php") ?>
 
 <?php
+//TODO, if they selected an old item, use that item info from the db using item id and create a listing based on that, instead of creating duplicate item in db
 
 $item_name = $_POST['item_name'];
 $description = $_POST['description'];

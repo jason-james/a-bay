@@ -1,6 +1,12 @@
 <?php require_once ("../../private/initialise.php") ?>
 <?php include("../../private/shared/header.php"); ?>
 
+<?php
+$user_id = $_SESSION['user_id'];
+$query = "SELECT * from item where seller_fk = $user_id";
+$items_sold = mysqli_query($db, $query);
+?>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="index.php">A-Bay</a>
@@ -28,9 +34,20 @@
 </nav>
 
   <div class="subject new">
-    <h1>Create Item</h1>
+    <h1>Create Listing</h1>
 
 <form action="insert_item_info.php" method="post"> <!--// action is where the form will be submitted-->
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Items Sold</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01">
+            <?php while($item = mysqli_fetch_assoc($items_sold)) {
+                ?>   <!-- while able to fetch a result from the bid_set, go through each and get username, bid amount and timestamp-->
+                <option name="past_item" value="<?php echo $item['item_id']?>"> <?php echo $item['item_name']?> </option>
+                <?php } ?>
+        </select>
+    </div>
     <div class="form-group">
     <dt>Item name</dt>
         <textarea type="text" name="item_name"  placeholder="Item Name..." cols = "50" rows = "1" ></textarea>
@@ -50,7 +67,7 @@
     </dd>
   </dl>
     <dl>
-        <dt>Descirption</dt>
+        <dt>Description</dt>
         <textarea type="text" name="description" placeholder="Description..." rows = "5" cols="100"></textarea>
     </dl>
     <dl>
