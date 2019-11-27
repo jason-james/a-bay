@@ -210,7 +210,6 @@ $is_active_listing = $listing_details['is_active_listing']
             <div class="col-md-6">
                 <div class="product-price">Start date: <span><strong><?php echo $listing_details['start_time']?></strong></span></div>
                 <div class="product-price">End date: <span><strong><?php echo $listing_details['end_time']?></strong></span></div>
-                <div class="product-price">Number of watchers: <span><strong><?php echo $listing_details['number_watching']?></strong></span></div>
             </div>
         </div>
 

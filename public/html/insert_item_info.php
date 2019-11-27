@@ -2,13 +2,12 @@
 
 <?php
 //TODO, if they selected an old item, use that item info from the db using item id and create a listing based on that, instead of creating duplicate item in db
-// TODO, we need to parse the POST values first to protect from SQL injection, check how its done in register_functions
 
-$item_name = $_POST['item_name'];
-$description = $_POST['description'];
-$size = $_POST['size'];
-$state = $_POST['condition'];
-$category = $_POST['category'];
+$item_name =  mysqli_escape_string($db, $_POST['item_name']);
+$description = mysqli_escape_string($db, $_POST['description']);
+$size = mysqli_escape_string($db, $_POST['size']);
+$state = mysqli_escape_string($db, $_POST['condition']);
+$category = mysqli_escape_string($db, $_POST['category']);
 $seller_fk = $_SESSION['user_id'];
 $res = mysqli_query($db, "SELECT country from addresses WHERE user_fk = '$seller_fk'");
 $location = $res -> fetch_assoc();
@@ -38,7 +37,7 @@ if (in_array($image_actual_ext, $allowed)) {
         }
 
     } else {
-        echo "There was an erorr uploading your image!";
+        echo "There was an error uploading your image!";
     }
 } else{
     echo "You cannot upload files of this type!";
