@@ -36,7 +36,7 @@ $items_sold = mysqli_query($db, $query);
   <div class="subject new">
     <h1>Create Listing</h1>
 
-<form action="insert_item_info.php" method="post"> <!--// action is where the form will be submitted-->
+<form action="insert_item_info.php" method="post" enctype = multipart/form-data> <!--// action is where the form will be submitted-->
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Items Sold</label>
@@ -54,7 +54,7 @@ $items_sold = mysqli_query($db, $query);
   </div>
     <div class="form-group">
         <label for="exampleFormControlFile1">Image upload</label>
-        <input type="file" class="form-control-file" id="item_image">
+        <input type="file" class="form-control-file" name="item_image">
     </div>
   <dl>
     <dt>Condition</dt>

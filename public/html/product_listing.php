@@ -194,7 +194,7 @@ $is_active_listing = $listing_details['is_active_listing']
     </div>
     <div class="row my-4">
     <div class="col-sm-5">
-            <img id="item-display" src="https://media.karousell.com/media/photos/products/2018/10/06/corsair_gs600_80plus_psu_1538780922_81e254d1.jpg" height="375" width="450" alt=""></img>
+        <img id="item-display" src="<?php echo url_for('/html/' . $item_details['image_location']) ?> " height="375" width="450" alt=""/>
     </div>
 
     <div class="col-sm-7">
