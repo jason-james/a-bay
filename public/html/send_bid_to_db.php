@@ -29,7 +29,6 @@ if (is_post_request()) {
         if (!mail($to, $subject, $message, $headers)) {
             echo "Mail returned false";
             $errorMessage = error_get_last()['message'];
-            die();
         }
     }
 

@@ -133,6 +133,7 @@ CREATE TABLE IF NOT EXISTS `listing` (
                                          `starting_price` double NOT NULL,
                                          `winning_bid` int(16) ,
                                          `item_id` int(16) NOT NULL,
+                                         `is_active_listing` tinyint(1) NOT NULL,
                                          PRIMARY KEY (`listing_id`),
                                          KEY `winning_bid` (`winning_bid`),
                                          KEY `item_id` (`item_id`)

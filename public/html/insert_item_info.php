@@ -20,7 +20,7 @@ $buy_now_price = $_POST['buy_now_price'];
 $number_of_bids = 0;
 $latest_bid_amount = 0;
 $number_watching = 0;
-
+$is_active_listing = TRUE;
 
 
 
@@ -40,7 +40,7 @@ $item_id = mysqli_insert_id($db);
 
 if($result_set1) {
     $sql2 = "INSERT INTO LISTING ";
-    $sql2 .= "(end_time, starting_price, buy_now_price, number_of_bids, latest_bid_amount, number_watching, item_id) ";
+    $sql2 .= "(end_time, starting_price, buy_now_price, number_of_bids, latest_bid_amount, number_watching, item_id, is_active_listing) ";
     $sql2 .= "VALUES (";
     $sql2 .= "'" . $end_date . "'," ;
     $sql2 .= "'" . $starting_price . "'," ;
@@ -48,7 +48,8 @@ if($result_set1) {
     $sql2 .= "'" . $number_of_bids . "'," ;
     $sql2 .= "'" . $latest_bid_amount . "'," ;
     $sql2 .= "'" . $number_of_bids . "'," ;
-    $sql2 .= "'" . $item_id . "'" ;
+    $sql2 .= "'" . $item_id . "'," ;
+    $sql2 .= "'" . $is_active_listing . "'" ;
     $sql2 .= ");";
     $result_set2 = mysqli_query($db, $sql2);
     $listing_id = mysqli_insert_id($db);

@@ -33,7 +33,65 @@ $seller_details = $query_res -> fetch_assoc();
 $query = "SELECT * from listing where listing_id = $listing_id";
 $query_res = mysqli_query($db, $query);
 $listing_details = $query_res -> fetch_assoc();
+$latest_bid_amount = $listing_details['latest_bid_amount'];
+$is_active_listing = $listing_details['is_active_listing']
 ?>
+
+<script>
+
+    // Set the date we're counting down to
+    var countDownDate = new Date("<?php echo $listing_details['end_time']?>").getTime();
+
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Display the result in the element with id="demo"
+        document.getElementById("timer").innerHTML = days + "d " + hours + "h "
+            + minutes + "m " + seconds + "s";
+
+        // If the count down is finished, set listing to expired
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("timer").innerHTML = "Listing Expired";
+
+            // Update database with winning bid
+
+            var httpRequest = new XMLHttpRequest();
+
+            if (!httpRequest) {
+                alert('Giving up :( Cannot create an XMLHTTP instance');
+                return false;
+            }
+            httpRequest.onreadystatechange = alertContents;
+            httpRequest.open('POST', '<?php echo url_for('/html/set_winning_bid.php') ?>');
+            httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            httpRequest.send('listing_id=' + encodeURIComponent(<?php echo $listing_id?>) + '&latest_bid_amount=' +  encodeURIComponent(<?php echo $latest_bid_amount?>) + '&is_active_listing=' + encodeURIComponent(<?php echo $is_active_listing?>));
+
+            function alertContents() {
+                if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                    if (httpRequest.status === 200) {
+                        console.log('successful ajax call', httpRequest.response);
+                    } else {
+                        console.log('unsuccessful ajax call', httpRequest.response);
+                    }
+                }
+            }
+
+        }
+    }, 1000);
+</script>
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -140,7 +198,8 @@ $listing_details = $query_res -> fetch_assoc();
     </div>
 
     <div class="col-sm-7">
-        <div class="h5"><?php echo $item_details['item_name'] ?> </div>
+        <div class="h5"><?php echo $item_details['item_name'] . "  "?></div>
+        <div>Time remaining: <span id="timer"></span></div>
         <hr>
         <div class="row">
             <div class="col-md-6">
