@@ -162,7 +162,7 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="modal-title" id="exampleModalLongTitle">Bids for this item</h6>
+                <h5  style="text-align:center" class="modal-title" id="exampleModalLongTitle">Bids for this item</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -170,9 +170,9 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
             <div class="modal-body">
                 <table align = "centre" class="list">
                     <tr>            <!-- table has been inserted into card-->
-                        <th>Bid Price (£)</th>
-                        <th>Time of Bid</th>
-                        <th>Bidder</th>
+                        <th style="text-align:center" >Bid Price</th>
+                        <th style="text-align:center" >Time of Bid</th>
+                        <th style="text-align:center" >Bidder</th>
                         <th>&nbsp</th>
                         <th>&nbsp;</th>
                         <th>&nbsp;</th>
@@ -185,9 +185,9 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
                         $bidder = $bidder['username']
                         ?>   <!-- while able to fetch a result from the bid_set, go through each and get username, bid amount and timestamp-->
                         <tr>
-                            <td><?php echo $bid['bid_amount']; ?></td>
-                            <td><?php echo $bid['bid_timestamp']; ?></td>
-                            <td><?php echo $bidder; ?></td>
+                            <td style="text-align:center" ><?php echo "£" . $bid['bid_amount']; ?></td>
+                            <td style="text-align:center" ><?php echo $bid['bid_timestamp']; ?></td>
+                            <td style="text-align:center" ><?php echo $bidder; ?></td>
                         </tr>
                     <?php } ?>
                 </table>
