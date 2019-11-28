@@ -2,6 +2,9 @@
 <?php
 require_once ("../../private/initialise.php");
 
+// TODO: if the bid is == the buy it now price, automatically assign winning and set listing to inactive despite timer
+// Remove buy it now button and just set a note in the bid modal about buy it now
+
 $latest_bid_amount = $_POST['latest_bid_amount'];
 $listing_id = $_POST['listing_id'];
 $is_active_listing = $_POST['is_active_listing'];
@@ -42,6 +45,10 @@ if ($query_res -> num_rows > 0 && $is_active_listing == TRUE) { // If currently 
     $to =  $bidder_email = $bidder['email'];
     $subject = "You just won an auction! A-bay";
     $message = "Congratulations, you just had the highest bid on an auction. Check your a-bay account to see it.";
+
+
+    // TODO: Email seller to notify that their item sold
+
     if (!mail($to, $subject, $message, $headers)) {
         echo "Mail returned false";
         $errorMessage = error_get_last()['message'];
