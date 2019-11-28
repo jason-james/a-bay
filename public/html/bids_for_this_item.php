@@ -47,7 +47,7 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
                     <div class="card-header" align="m">Bids for this item</div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <table class="list">
+                            <table align = "centre" class="list">
                                 <tr>            <!-- table has been inserted into card-->
                                     <th>Bid Price (£)</th>
                                     <th>Time of Bid</th>

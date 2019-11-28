@@ -9,19 +9,33 @@ if (is_post_request()) {
     $bidder_fk = $_SESSION['user_id'];
     $bid_on_fk = $_GET['listing_id'];
 
+
+    $query = "INSERT INTO bid (bid_amount, bidder_fk, bid_on_fk) VALUES ('$bid_value', '$bidder_fk', '$bid_on_fk')";
+    $result = mysqli_query($db, $query);
+
+    // to redirect to list of bids after bidding has been entered:
+    if ($result) {
+        redirect_to('/public/html/bids_for_this_item.php?listing_id=' . $bid_on_fk);
+
+    } else {
+        echo mysqli_error($db);
+        db_disconnect($db);                // This is saying if the database isnt updated, state the error and disconnect from database
+        exit;
+    }
+
     // Get watchlist and send email to everyone on it
 
     $query = "select w.*, a.email 
             from watchlist w 
             inner join account a on a.user_id  = w.user_fk 
             where w.listing_watched_fk = $bid_on_fk";
+    $value_entered = $_GET['bid_amount'];
 
     $res = mysqli_query($db, $query);
     $email = "jasontest797@gmail.com";
-    while($row = mysqli_fetch_assoc($res))
-    {
-        $headers = 'From: ' .$email . "\r\n".
-            'Reply-To: ' . $email. "\r\n" .
+    while ($row = mysqli_fetch_assoc($res)) {
+        $headers = 'From: ' . $email . "\r\n" .
+            'Reply-To: ' . $email . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
         $to = $row['email'];
         $subject = "Someone has bid on an item you're watching";
@@ -31,21 +45,9 @@ if (is_post_request()) {
         }
     }
 
-    $query = "INSERT INTO bid (bid_amount, bidder_fk, bid_on_fk) VALUES ('$bid_value', '$bidder_fk', '$bid_on_fk')";
-    $result = mysqli_query($db, $query);
 
-
+// updates the latest bid amount in the listing page
     $query = "UPDATE listing SET latest_bid_amount = $bid_value WHERE listing_id=$bid_on_fk";
     $result = mysqli_query($db, $query);
-
-    // to redirect to list of bids after bidding has been entered:
-    if ($result) {
-        redirect_to('/public/html/bids_for_this_item.php?listing_id=' . $bid_on_fk);
-
-    } else {
-      echo mysqli_error($db);
-      db_disconnect($db);                // This is saying if the database isnt updated, state the error and disconnect from database
-      exit;
-    }
 
 }
