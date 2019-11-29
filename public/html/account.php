@@ -4,6 +4,21 @@
 
 <body>
 
+<?php
+
+$user_id = $_SESSION['user_id'];
+
+$query = "SELECT DISTINCT watchlist.user_fk, listing.end_time, listing.latest_bid_amount, listing.item_id FROM listing INNER JOIN watchlist ON watchlist.user_fk = $user_id";
+$query_res = mysqli_query($db, $query);
+$resultset = array();
+
+while ($row = mysqli_fetch_assoc($query_res)) {
+    $resultset[] = $row;
+}
+
+?>
+
+
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -146,30 +161,26 @@
                         <thead class="thead-dark">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                            <th scope="col">Item Name</th>
+                            <th scope="col">End Date</th>
+                            <th scope="col">Current Bid</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
+                        <?php
+                        $x = 0;
+
+                        foreach ($resultset as $array) {
+                            $x++;
+                            $item = $array['item_id'];
+                            $query = "SELECT item_name FROM item WHERE item_id = $item";
+                            $query_res = mysqli_query($db, $query);
+                            $ItemName = $query_res->fetch_assoc();
+
+                            echo "<tr><br>" . '<emsp><th scope = "row">' . $x . "</th><br><emsp>" . "<td>". $ItemName['item_name'] . "</td><br><emsp><td>" . $array['end_time'] . "</td><br><emsp><td>" . $array['latest_bid_amount'] . "</td><br></tr>" ;
+
+                        }
+                        ?>
                         </tbody>
                     </table>
 
@@ -221,7 +232,7 @@
                         <li class="list-group-item"><a href="#">Correspondence</a></li>
                         <li class="list-group-item"><a href="#">Feedback</a></li>
                         <li class="list-group-item"><a href="#">Watch List</a></li>
-                        <li class="list-group-item"><a href="#">Personal Details</a></li>
+                        <li class="list-group-item"><a href="personal_details.php">Personal Details</a></li>
                     </ul>
                 </div>
                 <div class="card-footer text-center"><a href="#">Forgot Password</a></div>
