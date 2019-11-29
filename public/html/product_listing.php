@@ -37,6 +37,12 @@ $latest_bid_amount = $listing_details['latest_bid_amount'];
 $is_active_listing = $listing_details['is_active_listing']
 ?>
 
+<?php
+
+$bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function created in deji_query_functions.php to get the results of the query
+
+?>
+
 <script>
 
     // Set the date we're counting down to
@@ -149,6 +155,50 @@ $is_active_listing = $listing_details['is_active_listing']
         </div>
     </div>
 
+<!--modal to view bids for this item button-->
+
+
+<div class="modal fade" id="currentbidsModal" tabindex="-1" role="dialog" aria-labelledby="currentbidsModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5  style="text-align:center" class="modal-title" id="exampleModalLongTitle">Bids for this item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table align = "centre" class="list">
+                    <tr>            <!-- table has been inserted into card-->
+                        <th style="text-align:center" >Bid Price</th>
+                        <th style="text-align:center" >Time of Bid</th>
+                        <th style="text-align:center" >Bidder</th>
+                        <th>&nbsp</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                    </tr>
+
+                    <?php while($bid = mysqli_fetch_assoc($bid_set)) {
+                        $bidder = $bid['bidder_fk'];
+                        $res = mysqli_query($db, "SELECT username from user where user_fk = $bidder");
+                        $bidder = $res -> fetch_assoc();
+                        $bidder = $bidder['username']
+                        ?>   <!-- while able to fetch a result from the bid_set, go through each and get username, bid amount and timestamp-->
+                        <tr>
+                            <td style="text-align:center" ><?php echo "£" . $bid['bid_amount']; ?></td>
+                            <td style="text-align:center" ><?php echo $bid['bid_timestamp']; ?></td>
+                            <td style="text-align:center" ><?php echo $bidder; ?></td>
+                        </tr>
+                    <?php } ?>
+                </table>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<!----------------------------------------------------->
+
     <div class="modal fade" id="sendMessage" tabindex="-1" role="dialog" aria-labelledby="sendMessage" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -243,6 +293,14 @@ $is_active_listing = $listing_details['is_active_listing']
                     </button>
                 </form>
               <?php endif ?>
+
+        </div>
+
+         <div class="btn-group bidsforthisitem">
+
+             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#currentbidsModal">
+                 Current Bids
+             </button>
         </div>
         <!-- Card -->
 
