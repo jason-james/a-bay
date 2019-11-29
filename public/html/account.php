@@ -8,7 +8,7 @@
 
 $user_id = $_SESSION['user_id'];
 
-$query = "SELECT DISTINCT watchlist.user_fk, listing.end_time, listing.latest_bid_amount, listing.item_id FROM listing INNER JOIN watchlist ON watchlist.user_fk = $user_id";
+$query = "SELECT DISTINCT watchlist.user_fk, listing.end_time, listing.latest_bid_amount, listing.item_id, listing.listing_id FROM listing INNER JOIN watchlist ON watchlist.user_fk = $user_id";
 $query_res = mysqli_query($db, $query);
 $resultset = array();
 
@@ -164,6 +164,7 @@ while ($row = mysqli_fetch_assoc($query_res)) {
                             <th scope="col">Item Name</th>
                             <th scope="col">End Date</th>
                             <th scope="col">Current Bid</th>
+                            <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -176,8 +177,11 @@ while ($row = mysqli_fetch_assoc($query_res)) {
                             $query = "SELECT item_name FROM item WHERE item_id = $item";
                             $query_res = mysqli_query($db, $query);
                             $ItemName = $query_res->fetch_assoc();
+                            $link = url_for('/html/product_listing.php?item_id=' . $item . "&listing_id=" . $array['listing_id']);
 
-                            echo "<tr><br>" . '<emsp><th scope = "row">' . $x . "</th><br><emsp>" . "<td>". $ItemName['item_name'] . "</td><br><emsp><td>" . $array['end_time'] . "</td><br><emsp><td>" . $array['latest_bid_amount'] . "</td><br></tr>" ;
+                            echo "<tr><br>" . '<emsp><th scope = "row">' . $x . "</th><br><emsp>" . "<td>". $ItemName['item_name'] . "</td><br><emsp><td>" . $array['end_time'] . "</td><br><emsp><td>" . $array['latest_bid_amount'] . "</td><br><emsp><td>" . '<li class="list-group-item"><a href="' . $link . '"' . ">Link</a></li>" .  "</td><br></tr>" ;
+
+
 
                         }
                         ?>
