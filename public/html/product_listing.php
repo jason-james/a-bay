@@ -168,16 +168,16 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
                 </button>
             </div>
             <div class="modal-body">
-                <table align = "centre" class="list">
-                    <tr>            <!-- table has been inserted into card-->
-                        <th style="text-align:center" >Bid Price</th>
-                        <th style="text-align:center" >Time of Bid</th>
-                        <th style="text-align:center" >Bidder</th>
-                        <th>&nbsp</th>
-                        <th>&nbsp;</th>
-                        <th>&nbsp;</th>
-                    </tr>
+                <table class="table">
+                    <!-- table has been inserted into card-->
+                    <thead class="thead-dark">
+                    <th style="text-align:center" >Bid Price</th>
+                    <th style="text-align:center" >Time of Bid</th>
+                    <th style="text-align:center" >Bidder</th>
+                    <th style="text-align:center" ></th>
 
+                    </thead>
+                    <tbody>
                     <?php while($bid = mysqli_fetch_assoc($bid_set)) {
                         $bidder = $bid['bidder_fk'];
                         $res = mysqli_query($db, "SELECT username from user where user_fk = $bidder");
@@ -190,6 +190,7 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
                             <td style="text-align:center" ><?php echo $bidder; ?></td>
                         </tr>
                     <?php } ?>
+                    </tbody>
                 </table>
         </div>
     </div>
@@ -263,13 +264,6 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
             </div>
         </div>
 
-
-
-        <div class="btn-group cart">
-            <button type="button" class="btn btn-success">
-                <i class="fas fa-shopping-bag mr-2"></i>Buy now
-            </button>
-        </div>
         <div class="btn-group cart">
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#bidModal">
                 <i class="fas fa-credit-card mr-2"></i>Make bid
@@ -277,23 +271,28 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
         </div>
         <div class="btn-group wishlist my-2">
             <?php
-            $user_id = $_SESSION['user_id'];
+            $user_id = $_SESSION['user_id'] ?? '';
             $qry = "SELECT * from watchlist where user_fk = $user_id AND listing_watched_fk = $listing_id";
             $res = mysqli_query($db, $qry);?>
-            <?php if ($res -> num_rows == 0): ?>
+            <?php if (isset($_SESSION['user_id']) && $res -> num_rows == 0): ?>
                 <form class="mt-3" action="<?php echo "product_listing.php?item_id=" . $item_id . "&listing_id=" . $listing_id ?>" method="post">
                     <button type="submit" name="watch" id="watch" class="btn btn-outline-dark">
                         <i class="fas fa-eye mr-2"></i>Watch item
                     </button>
                 </form>
-            <?php else : ?>
+            <?php elseif (isset($_SESSION['user_id'])) : ?>
                 <form class="mt-3" action="<?php echo "product_listing.php?item_id=" . $item_id . "&listing_id=" . $listing_id ?>" method="post">
                     <button type="submit" name="unwatch" id="unwatch" class="btn btn-outline-dark">
                         <i class="fas fa-eye mr-2"></i>Unwatch
                     </button>
                 </form>
+            <?php else: ?>
+                <form class="mt-3" action="<?php echo "login.php" ?>">
+                    <button class="btn btn-outline-dark">
+                        <i class="fas fa-eye mr-2"></i>Login to Watch Item
+                    </button>
+                </form>
               <?php endif ?>
-
         </div>
 
          <div class="btn-group bidsforthisitem">
