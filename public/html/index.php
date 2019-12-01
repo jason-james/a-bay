@@ -50,33 +50,21 @@
         <div class="col-lg-9">
             <div class="input-group my-4">
                 <form action="search_results.php" method="GET">
-                    <input type="text" name="query" class="form-control" aria-label="Text input with segmented dropdown button">
-                    <input type="submit" value="Search" class = 'btn btn_primary'>
-                    <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <div role="separator" class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
+                    <div class="input-group my-4">
+                        <input type="text" name="query" class="form-control" aria-label="Text input with segmented dropdown button">
+                        <div class="input-group-append">
+                            <input type="submit" value="Search" class='btn btn-primary'>
                         </div>
-                        <button class="btn btn-outline-primary search-bar-dropdown-toggle dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</button>
-            </form>
+                        <!-- /Result ordering -->
+
+                        <select name="searchOrder">
+                            <option value="X">Soonest Expiry</option>
+                            <option value="H">Price Low to High</option>
+                            <option value="L">Price High to Low</option>
+                        </select>
+                    </div>
+                </form>
             </div>
-<!-- result ordering -->
-            <p>
-                Order results
-                <select name="searchOrder">
-
-                    <option orderChoice="X">Soonest Expiry</option>
-
-                    <option orderChoice="H">Price Low to High</option>
-
-                    <option orderChoice="L">Price High to Low</option>
-
-                </select>
-
-            </p>
-
 
                 <div class="row my-4">
 
@@ -206,11 +194,6 @@
     <!-- /.row -->
 
 </div>
-<!-- Search function -->
-<form action="search_results.php" method="GET">
-    <input type="text" name="query" />
-
-</form>
 
 <!-- /.Footer -->
 <?php include("../../private/shared/footer.php")?>

@@ -1,22 +1,9 @@
-<?php
-//require_once("../../private/initialise.php")
-ini_set('display_errors', 1);
-include("../../private/shared/header.php")?>
+<?php require_once("../../private/initialise.php"); ?>
+<?php include("../../private/shared/header.php"); ?>
 
-?>
-<?php
-$db = mysqli_connect("localhost", "root", "", 'abay');
-/*
-    localhost - it's location of the mysql server, usually localhost
-    root - your username
-    third is your password
+<?php ini_set('display_errors', 1); ?>
 
-    if connection fails it will stop loading the page and display an error
-*/
-
-mysqli_select_db($db,"abay") or die(mysqli_error($db));
-/* tutorial_search is the name of database we've created */
-?>
+<body >
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
@@ -45,7 +32,7 @@ mysqli_select_db($db,"abay") or die(mysqli_error($db));
     </nav>
 
     <!-- Page Content -->
-    <div class="container">
+    <div class="container" style="min-height:100vh">
 
         <div class="row">
 
@@ -64,96 +51,94 @@ mysqli_select_db($db,"abay") or die(mysqli_error($db));
             <div class="col-lg-9">
                 <div class="input-group my-4">
                     <form action="search_results.php" method="GET">
+                        <div class="input-group my-4">
                         <input type="text" name="query" class="form-control" aria-label="Text input with segmented dropdown button">
-                        <input type="submit" value="Search" class = 'btn btn_primary'>
-
-                    </form>
-                    <p>
-                        Order results
-                        <select name="searchOrder">
-
-                            <option value="X">Soonest Expiry</option>
-
-                            <option value="H">Price Low to High</option>
-
-                            <option value="L">Price High to Low</option>
-
-                        </select>
-
-                    </p>
-
-
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <div role="separator" class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
+                            <div class="input-group-append">
+                            <input type="submit" value="Search" class='btn btn-primary'>
+                            </div>
+                                <select name="searchOrder">
+                                    <option value="X">Soonest Expiry</option>
+                                    <option value="H">Price Low to High</option>
+                                    <option value="L">Price High to Low</option>
+                                </select>
                         </div>
-                        <button class="btn btn-outline-primary search-bar-dropdown-toggle dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</button>
+                    </form>
                 </div>
 
                 <!-- /.row -->
+                <?php
+
+                $query = $_GET['query'];
+                //gets value sent over search form
+                //$orderChoice = $_GET['orderChoice'];
+                $min_length = 3;
+                //minimum length
+
+                if (strlen($query) >= $min_length) { // if query length is more or equal minimum length then
+
+                    $query = htmlspecialchars($query);
+
+                    $raw_results = mysqli_query($db, "SELECT * FROM item WHERE (item_name LIKE '%".$query."%')") or die(mysqli_error($db));
 
 
+                    if(mysqli_num_rows($raw_results) > 0){ // if one or more rows are returned do following
 
+                        while($results = mysqli_fetch_array($raw_results)){
+
+                            //echo "<p><h3>".$results['item_name']."</h3>".$results['description']."<br>".$results['size']."<br>".$results['location']."<br>".$results['state']."<br>".$results['category']."<br><img src=".$results['image_location']." width='150' height='125'></p>";
+                            // returns the item name, description, size, location, state and an image of the item
+                            echo ('
+                    <div class="row my-4">
+                        <div class="col">
+                            <div class="card h-50">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <a href="#"><img class="card-img-top" src="'.$results["image_location"].'" width=\'150\' height=\'125\' alt=""> </a>
+                                        </div>
+                                        <div class="col">
+                                            <h4 class="card-title">
+                                                <a href="product_listing.php">'.$results["item_name"].'</a>
+                                            </h4>
+                                            <h5>$44.99 // TODO. Need to get curr bid</h5>
+                                            <p class="card-text">
+                                            Category: '.$results["category"].' <br>
+                                            '.$results["location"].'
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                                </div>
+                            </div>
+                         </div>
+                    </div>');
+                        }
+                    }
+                    else{ // if there is no matching rows do following
+                        echo "No results";
+                    }
+
+                }
+                else{ // if query is too short
+                    echo "Minimum search length is ".$min_length.' characters.';
+                }
+                ?>
             </div>
-
             <!-- /.col-lg-9 -->
-
         </div>
         <!-- /.row -->
-
     </div>
     <!-- /.container -->
+    <?php include("../../private/shared/footer.php")?>
+    <!--- Bootstrap core JavaScript  -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
 
 
-<?php
-
-$query = $_GET['query'];
-//gets value sent over search form
-$orderChoice = $_GET['orderChoice']
-$min_length = 3;
-//minimum length
-
-if (strlen($query) >= $min_length) { // if query length is more or equal minimum length then
-
-    $query = htmlspecialchars($query);
-
-    $raw_results = mysqli_query($db, "SELECT * FROM item WHERE (item_name LIKE '%".$query."%')") or die(mysqli_error($db));
-
-
-    if(mysqli_num_rows($raw_results) > 0){ // if one or more rows are returned do following
-
-        while($results = mysqli_fetch_array($raw_results)){
-
-            echo "<p><h3>".$results['item_name']."</h3>".$results['description']."<br>".$results['size']."<br>".$results['location']."<br>".$results['state']."<br>".$results['category']."<br><img src=".$results['image_location']." width='150' height='125'></p>";
-            // returns the item name, description, size, location, state and an image of the item
-        }
-
-    }
-    else{ // if there is no matching rows do following
-        echo "No results";
-    }
-
-}
-else{ // if query is too short
-    echo "Minimum search length is ".$min_length.' characters.';
-}
-?>
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; A-Bay 2019</p>
-        </div>
-        <!-- /.container -->
-    </footer>
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    </body>
 
 
 
