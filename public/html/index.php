@@ -1,7 +1,6 @@
 
 <?php require_once ("../../private/initialise.php") ?>
 <?php include("../../private/shared/header.php")?>
-
 <body>
 
 <!-- Navigation -->
@@ -49,24 +48,37 @@
         <!-- /.col-lg-3 -->
 
         <div class="col-lg-9">
-
             <div class="input-group my-4">
-                <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
-                <div class="input-group-append">
-                    <a class="btn btn-primary" href="search_results.php">Search</a>
-
-                    <button class="btn btn-outline-primary search-bar-dropdown-toggle dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</button>
+                <form action="search_results.php" method="GET">
+                    <input type="text" name="query" class="form-control" aria-label="Text input with segmented dropdown button">
+                    <input type="submit" value="Search" class = 'btn btn_primary'>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                        <div role="separator" class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Separated link</a>
-                    </div>
-                </div>
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            <div role="separator" class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Separated link</a>
+                        </div>
+                        <button class="btn btn-outline-primary search-bar-dropdown-toggle dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</button>
+            </form>
             </div>
+<!-- result ordering -->
+            <p>
+                Order results
+                <select name="searchOrder">
 
-            <div class="row my-4">
+                    <option orderChoice="X">Soonest Expiry</option>
+
+                    <option orderChoice="H">Price Low to High</option>
+
+                    <option orderChoice="L">Price High to Low</option>
+
+                </select>
+
+            </p>
+
+
+                <div class="row my-4">
 
                 <div class="col">
                     <div class="card h-75">
@@ -88,104 +100,104 @@
             <!-- /.row -->
             <div class="row my-4">
 
-            <div class="col">
-                <div class="card h-50">
-                    <a href="#"><img class="card-img-top" src="http://placehold.it/250x125" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Item Two</a>
-                        </h4>
-                        <h5>$24.99</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                <div class="col">
+                    <div class="card h-50">
+                        <a href="#"><img class="card-img-top" src="http://placehold.it/250x125" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="#">Item Two</a>
+                            </h4>
+                            <h5>$24.99</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col">
-                <div class="card h-50">
-                    <a href="#"><img class="card-img-top" src="http://placehold.it/250x125" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Item Three</a>
-                        </h4>
-                        <h5>$24.99</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                <div class="col">
+                    <div class="card h-50">
+                        <a href="#"><img class="card-img-top" src="http://placehold.it/250x125" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="#">Item Three</a>
+                            </h4>
+                            <h5>$24.99</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col">
-                <div class="card h-50">
-                    <a href="#"><img class="card-img-top" src="http://placehold.it/250x125" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Item Four</a>
-                        </h4>
-                        <h5>$24.99</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                <div class="col">
+                    <div class="card h-50">
+                        <a href="#"><img class="card-img-top" src="http://placehold.it/250x125" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="#">Item Four</a>
+                            </h4>
+                            <h5>$24.99</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row my-4">
+            <div class="row my-4">
 
-            <div class="col">
-                <div class="card h-50">
-                    <a href="#"><img class="card-img-top" src="http://placehold.it/250x125" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Item Two</a>
-                        </h4>
-                        <h5>$24.99</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                <div class="col">
+                    <div class="card h-50">
+                        <a href="#"><img class="card-img-top" src="http://placehold.it/250x125" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="#">Item Two</a>
+                            </h4>
+                            <h5>$24.99</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col">
-                <div class="card h-50">
-                    <a href="#"><img class="card-img-top" src="http://placehold.it/250x125" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Item Three</a>
-                        </h4>
-                        <h5>$24.99</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                <div class="col">
+                    <div class="card h-50">
+                        <a href="#"><img class="card-img-top" src="http://placehold.it/250x125" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="#">Item Three</a>
+                            </h4>
+                            <h5>$24.99</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col">
-                <div class="card h-50">
-                    <a href="#"><img class="card-img-top" src="http://placehold.it/250x125" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Item Four</a>
-                        </h4>
-                        <h5>$24.99</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                <div class="col">
+                    <div class="card h-50">
+                        <a href="#"><img class="card-img-top" src="http://placehold.it/250x125" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="#">Item Four</a>
+                            </h4>
+                            <h5>$24.99</h5>
+                            <p class="card-text">`Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
 
         <!-- /.col-lg-9 -->
@@ -194,7 +206,11 @@
     <!-- /.row -->
 
 </div>
-<!-- /.container -->
+<!-- Search function -->
+<form action="search_results.php" method="GET">
+    <input type="text" name="query" />
+
+</form>
 
 <!-- /.Footer -->
 <?php include("../../private/shared/footer.php")?>
