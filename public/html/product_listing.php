@@ -232,7 +232,6 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
         <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
         <div class="input-group-append">
             <a class="btn btn-primary" href="search_results.php">Search</a>
-
             <button class="btn btn-outline-primary search-bar-dropdown-toggle dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</button>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="#">Action</a>
