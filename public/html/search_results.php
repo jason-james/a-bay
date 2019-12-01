@@ -49,9 +49,9 @@
             <!-- /.col-lg-3 -->
 
             <div class="col-lg-9">
-                <div class="input-group my-4">
-                    <form action="search_results.php" method="GET" style="width: 100%">
-                        <div class="input-group my-4">
+                <div class="input-group mt-4">
+                    <form action="search_results.php" method="GET" style="width: 100%; margin-bottom: 0.5em">
+                        <div class="input-group">
                         <input type="text" name="query" class="form-control" aria-label="Text input with segmented dropdown button">
                             <div class="input-group-append">
                             <input type="submit" value="Search" class='btn btn-primary' placeholder="Search anything">
