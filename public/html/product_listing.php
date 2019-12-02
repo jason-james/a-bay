@@ -83,7 +83,8 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
             httpRequest.onreadystatechange = alertContents;
             httpRequest.open('POST', '<?php echo url_for('/html/set_winning_bid.php') ?>');
             httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            httpRequest.send('listing_id=' + encodeURIComponent(<?php echo $listing_id?>) + '&latest_bid_amount=' +  encodeURIComponent(<?php echo $latest_bid_amount?>) + '&is_active_listing=' + encodeURIComponent(<?php echo $is_active_listing?>));
+            httpRequest.send('listing_id=' + encodeURIComponent(<?php echo $listing_id?>) + '&latest_bid_amount=' +  encodeURIComponent(<?php echo $latest_bid_amount?>) +
+                '&is_active_listing=' + encodeURIComponent(<?php echo $is_active_listing?>) + '&item_id=' + encodeURIComponent(<?php echo $item_id?>));
 
             function alertContents() {
                 if (httpRequest.readyState === XMLHttpRequest.DONE) {
@@ -137,7 +138,7 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
                     </button>
                 </div>
                 <div class="modal-body">
-                        <form action="<?php echo url_for('/html/send_bid_to_db.php?item_id=' . $item_id . "&listing_id=" . $listing_id)?>" method="post">
+                        <form action="<?php echo url_for('/html/send_bid_to_db.php?item_id=' . $item_id . "&listing_id=" . $listing_id . "&seller_id=" . $seller_fk)?>" method="post">
                             <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">£</span>
@@ -147,8 +148,10 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
                                 <button type="submit" class="btn btn-primary">Submit bid</button>
                             </div>
                         </form>
-
                     </div>
+                <div class="modal-footer">
+                    To immediately win auction, send a bid at or more than the "Buy it Now" price.
+                </div>
                 </div>
 
             </div>

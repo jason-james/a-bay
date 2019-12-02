@@ -181,8 +181,6 @@ while ($row = mysqli_fetch_assoc($query_res)) {
 
                             echo "<tr>" . '<th scope = "row">' . $x . "</th>" . "<td>". $ItemName['item_name'] . "</td><td>" . $array['end_time'] . "</td><td>" . $array['latest_bid_amount'] . "</td><td>" . '<li class="list-group-item"><a href="' . $link . '"' . ">Link</a></li>" .  "</td></tr>" ;
 
-
-
                         }
                         ?>
                         </tbody>
@@ -218,12 +216,24 @@ while ($row = mysqli_fetch_assoc($query_res)) {
                 <div class="card h-100 w-100">
                     <div class="card-header">Selling</div>
                     <div class="card-body">
+                    <?php
+
+                    $query = "SELECT seller_fk from seller where seller_fk = $user_id";
+                    $query_res = mysqli_query($db, $query);
+                    if ($query_res -> num_rows != 0) {
+                        echo ('
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><a href="create_item.php">Sell Item</a></li>
                             <li class="list-group-item"><a href="#">Active Listings</a></li>
                             <li class="list-group-item"><a href="#">Sold Items</a></li>
                             <li class="list-group-item"><a href="#">Unsold Items</a></li>
-                        </ul>
+                        </ul>');
+                    } else {
+                        echo (
+                                '<div class="align-content-center">If you want seller privileges, click <a href='.'add_seller_privileges.php?user_id='.$user_id.'>here</a>.</div>'
+                        );
+                    }
+                    ?>
                     </div>
                 </div>
             </div>
