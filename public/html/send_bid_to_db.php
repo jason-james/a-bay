@@ -11,7 +11,7 @@ $latest_bid_amount = $listing_details['latest_bid_amount'];
 $listing_id = $_GET['listing_id'];
 $bid_on_fk = $_SESSION['user_id'];
 $item_id = $_GET['item_id'];
-$query_z = "SELECT latest_bid_amount FROM listing WHERE item_id='$item_id'";
+$query_z = "SELECT latest_bid_amount FROM listing WHERE listing_id='$listing_id'";
 $queryzsql = mysqli_query($db, $query_z);
 $queryzres = mysqli_fetch_assoc($queryzsql);
 $queryzresult= $queryzres['latest_bid_amount'];
@@ -70,7 +70,6 @@ if (is_post_request()) {
 
     } else {
         $low_bid_mess = "Your bid amount is too low, please enter a value above the current bid or starting price. Hit the back button to try again.";
-
         die($low_bid_mess);
 
     }

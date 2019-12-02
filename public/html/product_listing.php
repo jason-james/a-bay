@@ -356,76 +356,85 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
     </div>
 
     <h4>Recommendations</h4>
+    <div>Based on items you've bid on..</div>
+
     <!-- /.row -->
     <div class="row my-4">
 
-        <div class="col">
-            <div class="card h-50">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/250x125" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">Item Two</a>
-                    </h4>
-                    <h5>$24.99</h5>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-            </div>
-        </div>
+        <?php
+        if (isset($_SESSION['user_id'])) {
+            $query = "create temporary table listing_rank as 
+        select similar.bidder_fk,count(*) rank
+        from bid target 
+        join bid similar on target.bid_on_fk = similar.bid_on_fk and target.bidder_fk != similar.bidder_fk
+        where target.bidder_fk = $user_id
+        group by similar.bidder_fk";
 
-        <div class="col">
-            <div class="card h-50">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/250x125" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">Item Three</a>
-                    </h4>
-                    <h5>$24.99</h5>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-            </div>
-        </div>
+            mysqli_query($db, $query);
 
-        <div class="col">
-            <div class="card h-50">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/250x125" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">Item Four</a>
-                    </h4>
-                    <h5>$24.99</h5>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-            </div>
-        </div>
+            $query = "select similar.bid_on_fk, sum(listing_rank.rank) total_rank
+        from listing_rank
+        join bid similar on listing_rank.bidder_fk = similar.bidder_fk 
+        left join bid target on target.bidder_fk = $user_id and target.bid_on_fk = similar.bid_on_fk
+        where target.bid_on_fk is null
+        group by similar.bid_on_fk
+        order by total_rank desc";
 
-        <div class="col">
-            <div class="card h-50">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/250x125" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">Item Four</a>
-                    </h4>
-                    <h5>$24.99</h5>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-            </div>
-        </div>
+            $query_res = mysqli_query($db, $query) or die(mysqli_error($db));
+            $count = 0;
+            if ($query_res -> num_rows == 0) {
+                echo "No tailored recommendations available";
+            } else {
+                while ($result = mysqli_fetch_assoc($query_res) ) {
+                    if ($count >= 4) {
+                        break;
+                    }
 
+                    $recommendation_id = $result['bid_on_fk'];
+                    $query = "select distinct listing.*, item.item_name, item.location, item.image_location
+                            from listing
+                            inner join item on item.item_id  = listing.item_id
+                            where listing.listing_id = $recommendation_id";
+                    // TODO: Remember to add where clause for if the listing is active
+                    $recommendation = mysqli_query($db, $query);
+
+                    if ($recommendation -> num_rows == 0) {
+                        echo "No recommendations left";
+                        break;
+                    }
+
+                    $recommendation = $recommendation->fetch_assoc();
+
+
+                    echo('
+                 <div class="col-lg-3">
+                    <div class="card h-50">
+                        
+                        <img src="' . url_for("/html/" . $recommendation["image_location"]) . '" class="card-img-top" width="250" height="125" alt="item image"></a>
+                        <div class="card-body">
+                        <h4 class="card-title">
+                        <a href="' . url_for("/html/product_listing.php?item_id=" . $recommendation['item_id'] . "&listing_id=" . $recommendation['listing_id']) . '">' . $recommendation['item_name'] . '</a>
+                        </h4>
+                        <h5> £' . $recommendation['latest_bid_amount'] . '</h5>
+                        <div> Starting Price: £' . $recommendation['latest_bid_amount'] . '</div>
+                        <div> Ending: ' . $recommendation['end_time'] . '</div>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Location: ' . $recommendation['location'] . '</small>
+                    </div>
+                    </div>
+                </div>
+            ');
+                    $count++;
+                }
+            }
+        } else {
+            echo "You need to be logged in to receive recommendations.";
+        }
+
+        ?>
     </div>
     <!-- /.row -->
-</div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
