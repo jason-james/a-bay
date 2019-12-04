@@ -356,29 +356,29 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
     </div>
 
     <h4>Recommendations</h4>
-    <div>Based on items you've bid on..</div>
+    <div>Based on items that users with similar interests to you have bid on..</div>
 
     <!-- /.row -->
     <div class="row my-4">
-
+        <!-- /Recommendations -->
         <?php
         if (isset($_SESSION['user_id'])) {
             $query = "create temporary table listing_rank as 
-        select similar.bidder_fk,count(*) rank
-        from bid target 
-        join bid similar on target.bid_on_fk = similar.bid_on_fk and target.bidder_fk != similar.bidder_fk
-        where target.bidder_fk = $user_id
-        group by similar.bidder_fk";
+            select similar.bidder_fk,count(*) rank
+            from bid target 
+            join bid similar on target.bid_on_fk = similar.bid_on_fk and target.bidder_fk != similar.bidder_fk
+            where target.bidder_fk = $user_id
+            group by similar.bidder_fk";
 
             mysqli_query($db, $query);
-
+            // Adapted from https://stackoverflow.com/questions/2440826/collaborative-filtering-in-mysql
             $query = "select similar.bid_on_fk, sum(listing_rank.rank) total_rank
-        from listing_rank
-        join bid similar on listing_rank.bidder_fk = similar.bidder_fk 
-        left join bid target on target.bidder_fk = $user_id and target.bid_on_fk = similar.bid_on_fk
-        where target.bid_on_fk is null
-        group by similar.bid_on_fk
-        order by total_rank desc";
+            from listing_rank
+            join bid similar on listing_rank.bidder_fk = similar.bidder_fk 
+            left join bid target on target.bidder_fk = $user_id and target.bid_on_fk = similar.bid_on_fk
+            where target.bid_on_fk is null 
+            group by similar.bid_on_fk
+            order by total_rank desc";
 
             $query_res = mysqli_query($db, $query) or die(mysqli_error($db));
             $count = 0;
@@ -391,7 +391,7 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
                     }
 
                     $recommendation_id = $result['bid_on_fk'];
-                    $query = "select distinct listing.*, item.item_name, item.location, item.image_location
+                    $query = "select listing.*, item.item_name, item.location, item.image_location
                             from listing
                             inner join item on item.item_id  = listing.item_id
                             where listing.listing_id = $recommendation_id";
@@ -405,27 +405,29 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
 
                     $recommendation = $recommendation->fetch_assoc();
 
+                    if ($recommendation['is_active_listing'] == 1 ){
+                        echo('
+                         <div class="col-lg-3">
+                            <div class="card h-50">
+                                
+                                <img src="' . url_for("/html/" . $recommendation["image_location"]) . '" class="card-img-top" width="250" height="125" alt="item image"></a>
+                                <div class="card-body">
+                                <h4 class="card-title">
+                                <a href="' . url_for("/html/product_listing.php?item_id=" . $recommendation['item_id'] . "&listing_id=" . $recommendation['listing_id']) . '">' . $recommendation['item_name'] . '</a>
+                                </h4>
+                                <h5> £' . $recommendation['latest_bid_amount'] . '</h5>
+                                <div> Starting Price: £' . $recommendation['latest_bid_amount'] . '</div>
+                                <div> Ending: ' . $recommendation['end_time'] . '</div>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">Location: ' . $recommendation['location'] . '</small>
+                            </div>
+                            </div>
+                        </div>
+                    ');
+                        $count++;
+                    }
 
-                    echo('
-                 <div class="col-lg-3">
-                    <div class="card h-50">
-                        
-                        <img src="' . url_for("/html/" . $recommendation["image_location"]) . '" class="card-img-top" width="250" height="125" alt="item image"></a>
-                        <div class="card-body">
-                        <h4 class="card-title">
-                        <a href="' . url_for("/html/product_listing.php?item_id=" . $recommendation['item_id'] . "&listing_id=" . $recommendation['listing_id']) . '">' . $recommendation['item_name'] . '</a>
-                        </h4>
-                        <h5> £' . $recommendation['latest_bid_amount'] . '</h5>
-                        <div> Starting Price: £' . $recommendation['latest_bid_amount'] . '</div>
-                        <div> Ending: ' . $recommendation['end_time'] . '</div>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Location: ' . $recommendation['location'] . '</small>
-                    </div>
-                    </div>
-                </div>
-            ');
-                    $count++;
                 }
             }
         } else {

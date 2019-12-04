@@ -77,16 +77,18 @@
                 if (strlen($query) >= $min_length) { // if query length is more or equal minimum length then
 
                     $query = htmlspecialchars($query);
+                    $database_query = "select listing.end_time, listing.latest_bid_amount, listing.listing_id, item.*
+                            from listing
+                            inner join item on listing.item_id  = item.item_id
+                            where listing.is_active_listing = 1 and item_name LIKE '%". $query . "%'";
 
-                    $raw_results = mysqli_query($db, "SELECT * FROM item WHERE (item_name LIKE '%".$query."%')") or die(mysqli_error($db));
+                    $raw_results = mysqli_query($db, $database_query) or die(mysqli_error($db));
 
 
                     if(mysqli_num_rows($raw_results) > 0){ // if one or more rows are returned do following
 
                         while($results = mysqli_fetch_array($raw_results)){
-
-                            //echo "<p><h3>".$results['item_name']."</h3>".$results['description']."<br>".$results['size']."<br>".$results['location']."<br>".$results['state']."<br>".$results['category']."<br><img src=".$results['image_location']." width='150' height='125'></p>";
-                            // returns the item name, description, size, location, state and an image of the item
+                            
                             echo ('
                     <div class="row my-4">
                         <div class="col">
@@ -98,9 +100,9 @@
                                         </div>
                                         <div class="col">
                                             <h4 class="card-title">
-                                                <a href="product_listing.php">'.$results["item_name"].'</a>
+                                                <a href="' . url_for("/html/product_listing.php?item_id=" . $results['item_id'] . "&listing_id=" . $results['listing_id']) . '">'.$results["item_name"].'</a>
                                             </h4>
-                                            <h5>$44.99 // TODO. Need to get curr bid</h5>
+                                            <h5>'.$results['latest_bid_amount'].'</h5>
                                             <p class="card-text">
                                             Category: '.$results["category"].' <br>
                                             '.$results["location"].'
