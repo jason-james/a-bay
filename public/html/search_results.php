@@ -88,7 +88,7 @@
                     if(mysqli_num_rows($raw_results) > 0){ // if one or more rows are returned do following
 
                         while($results = mysqli_fetch_array($raw_results)){
-                            
+
                             echo ('
                     <div class="row my-4">
                         <div class="col">
@@ -102,8 +102,8 @@
                                             <h4 class="card-title">
                                                 <a href="' . url_for("/html/product_listing.php?item_id=" . $results['item_id'] . "&listing_id=" . $results['listing_id']) . '">'.$results["item_name"].'</a>
                                             </h4>
-                                            <h5>'.$results['latest_bid_amount'].'</h5>
-                                            <p class="card-text">
+                                            <h5>Latest bid: £'.$results['latest_bid_amount'].'</h5>
+                                            <p class="card-text">Ending: '.$results["end_time"].' <br>
                                             Category: '.$results["category"].' <br>
                                             '.$results["location"].'
                                             </p>

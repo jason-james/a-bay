@@ -66,7 +66,7 @@
             <!-- /.row -->
 
                 <?php
-                $query = "select listing.end_time, listing.latest_bid_amount, listing.listing_id, item.*
+                $query = "select listing.end_time, listing.latest_bid_amount, listing.listing_id, listing.end_time, item.*
                             from listing
                             inner join item on listing.item_id  = item.item_id
                             where listing.is_active_listing = 1";
@@ -87,8 +87,8 @@
                             <h4 class="card-title">
                                 <a href="' . url_for("/html/product_listing.php?item_id=" . $res['item_id'] . "&listing_id=" . $res['listing_id']) . '">' . $res['item_name'] . '</a>
                             </h4>
-                            <h5>£ '.$res["latest_bid_amount"].'</h5>
-                            <p class="card-text"> Category: '.$res["category"].' <br> '.$res["location"].' </p>
+                            <h5>Latest bid: £ '.$res["latest_bid_amount"].'</h5>
+                            <p class="card-text"> Ending: '.$res["end_time"].' <br> Category: '.$res["category"].' <br> '.$res["location"].' </p>
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">'.$res["location"].'</small>
@@ -107,6 +107,7 @@
     </div>
     <!-- /.row -->
 
+</div>
 </div>
 
 <!-- /.Footer -->
