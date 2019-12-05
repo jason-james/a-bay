@@ -74,19 +74,6 @@ CREATE TABLE IF NOT EXISTS `bid` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `buyer`
---
-
-DROP TABLE IF EXISTS `buyer`;
-CREATE TABLE IF NOT EXISTS `buyer` (
-                                       `buyer_fk` int(16) NOT NULL,
-                                       KEY `buyer_fk` (`buyer_fk`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
 --
 -- Table structure for table `item`
 --
