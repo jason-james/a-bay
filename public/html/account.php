@@ -244,7 +244,6 @@ while ($row = mysqli_fetch_assoc($query_res)) {
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><a href="#">Correspondence</a></li>
                         <li class="list-group-item"><a href="#">Feedback</a></li>
-                        <li class="list-group-item"><a href="#">Watch List</a></li>
                         <li class="list-group-item"><a href="personal_details.php">Personal Details</a></li>
                     </ul>
                 </div>

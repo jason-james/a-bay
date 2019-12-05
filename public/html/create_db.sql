@@ -173,12 +173,6 @@ ALTER TABLE `bid`
     ADD CONSTRAINT `bid_ibfk_2` FOREIGN KEY (`bid_on_fk`) REFERENCES `listing` (`listing_id`);
 
 --
--- Constraints for table `buyer`
---
-ALTER TABLE `buyer`
-    ADD CONSTRAINT `buyer_ibfk_1` FOREIGN KEY (`buyer_fk`) REFERENCES `account` (`user_id`) ON UPDATE CASCADE;
-
---
 -- Constraints for table `listing`
 --
 ALTER TABLE `listing`
