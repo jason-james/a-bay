@@ -52,7 +52,7 @@ if ($query_res -> num_rows > 0 && $is_active_listing == TRUE) { // If currently 
     // Get seller details
     $query = "select i.seller_fk, a.email
             from item i
-            inner join account a on a.user_id  = i.seller_fk";
+            inner join account a on a.user_id  = i.seller_fk and i.item_id = $item_id";
 
     $query_res = mysqli_query($db, $query);
     $query_res = $query_res -> fetch_assoc();
@@ -78,7 +78,7 @@ if ($query_res -> num_rows > 0 && $is_active_listing == TRUE) { // If currently 
     // Get seller details
     $query = "select i.seller_fk, a.email
             from item i
-            inner join account a on a.user_id  = i.seller_fk";
+            inner join account a on a.user_id  = i.seller_fk and i.item_id = $item_id";
 
     $query_res = mysqli_query($db, $query);
     $query_res = $query_res -> fetch_assoc();

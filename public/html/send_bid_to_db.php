@@ -64,7 +64,7 @@ if (is_post_request()) {
 
         if ($bid_amount >= $buy_now_price) {
             // If they bid at the buy it now price, end listing and send emails.
-            $query = "UPDATE listing SET end_time = CURRENT_TIMESTAMP";
+            $query = "UPDATE listing SET end_time = CURRENT_TIMESTAMP where listing.listing_id = $listing_id";
             mysqli_query($db, $query) or die(mysqli_error($db));
         }
 
