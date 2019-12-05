@@ -8,10 +8,9 @@
 
 $user_id = $_SESSION['user_id'];
 
-$query = "SELECT DISTINCT watchlist.user_fk, listing.end_time, listing.latest_bid_amount, listing.item_id, listing.listing_id FROM listing INNER JOIN watchlist ON watchlist.user_fk = $user_id";
+$query = "SELECT DISTINCT watchlist.user_fk, listing.end_time, listing.latest_bid_amount, listing.item_id, listing.listing_id FROM listing INNER JOIN watchlist ON watchlist.user_fk = $user_id and listing.listing_id = watchlist.listing_watched_fk";
 $query_res = mysqli_query($db, $query);
 $resultset = array();
-
 while ($row = mysqli_fetch_assoc($query_res)) {
     $resultset[] = $row;
 }

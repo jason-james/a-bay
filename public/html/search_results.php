@@ -40,9 +40,13 @@
 
                 <h1 class="my-4">A-Bay</h1>
                 <div class="list-group">
-                    <a href="#" class="list-group-item">Category 1</a>
-                    <a href="#" class="list-group-item">Category 2</a>
-                    <a href="#" class="list-group-item">Category 3</a>
+                    <a href="<?php echo url_for("/html/search_results.php?query=electronics&sortBy=expirydate") ?>" class="list-group-item">Electronics</a>
+                    <a href="<?php echo url_for("/html/search_results.php?query=Gaming&sortBy=expirydate") ?>" class="list-group-item">Gaming</a>
+                    <a href="<?php echo url_for("/html/search_results.php?query=Fashion&sortBy=expirydate") ?>" class="list-group-item">Fashion</a>
+                    <a href="<?php echo url_for("/html/search_results.php?query=Entertainment&sortBy=expirydate") ?>" class="list-group-item">Entertainment</a>
+                    <a href="<?php echo url_for("/html/search_results.php?query=Books&sortBy=expirydate") ?>" class="list-group-item">Books</a>
+                    <a href="<?php echo url_for("/html/search_results.php?query=Sports&sortBy=expirydate") ?>" class="list-group-item">Sports</a>
+                    <a href="<?php echo url_for("/html/search_results.php?query=Other&sortBy=expirydate") ?>" class="list-group-item">Other</a>
                 </div>
 
             </div>
@@ -52,13 +56,13 @@
                 <div class="input-group mt-4">
                     <form action="search_results.php" method="GET" style="width: 100%; margin-bottom: 0.5em">
                         <div class="input-group">
-                        <input type="text" name="query" class="form-control" aria-label="Text input with segmented dropdown button">
+                        <input type="text" name="query" class="form-control" aria-label="Text input with segmented dropdown button" placeholder="<?php echo $_GET['query'] ?? '' ?>">
                             <div class="input-group-append">
                             <input type="submit" value="Search" class='btn btn-primary' placeholder="Search anything">
-                                <select class="custom-select" name="searchOrder">
-                                    <option value="X">Soonest Expiry</option>
-                                    <option value="H">Price Low to High</option>
-                                    <option value="L">Price High to Low</option>
+                                <select class="custom-select" name="sortBy">
+                                    <option value="expirydate">Soonest Expiry</option>
+                                    <option value="pricelowhigh">Price Low to High</option>
+                                    <option value="pricehighlow">Price High to Low</option>
                                 </select>
                             </div>
                         </div>
@@ -69,6 +73,7 @@
                 <?php
 
                 $query = $_GET['query'];
+                $sort_by = $_GET['sortBy'];
                 //gets value sent over search form
                 //$orderChoice = $_GET['orderChoice'];
                 $min_length = 3;
@@ -77,13 +82,21 @@
                 if (strlen($query) >= $min_length) { // if query length is more or equal minimum length then
 
                     $query = htmlspecialchars($query);
+
                     $database_query = "select listing.end_time, listing.latest_bid_amount, listing.listing_id, item.*
                             from listing
                             inner join item on listing.item_id  = item.item_id
-                            where listing.is_active_listing = 1 and item_name LIKE '%". $query . "%'";
+                            where listing.is_active_listing = 1 and (item.item_name LIKE '%". $query . "%' or item.category LIKE '%". $query . "%')";
+
+                    if ($sort_by == 'expirydate') {
+                        $database_query .= " order by listing.end_time";
+                    } elseif ($sort_by == 'pricelowhigh') {
+                        $database_query .= " order by listing.latest_bid_amount";
+                    } elseif ($sort_by == 'pricehighlow') {
+                        $database_query .= " order by listing.latest_bid_amount desc";
+                    }
 
                     $raw_results = mysqli_query($db, $database_query) or die(mysqli_error($db));
-
 
                     if(mysqli_num_rows($raw_results) > 0){ // if one or more rows are returned do following
 

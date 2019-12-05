@@ -231,23 +231,24 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
         </div>
     </div>
 
-    <div class="input-group my-4">
-        <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
-        <div class="input-group-append">
-            <a class="btn btn-primary" href="search_results.php">Search</a>
-            <button class="btn btn-outline-primary search-bar-dropdown-toggle dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <div role="separator" class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a>
+    <div class="input-group mt-4">
+        <form action="search_results.php" method="GET" style="width: 100%; margin-bottom: 0.5em">
+            <div class="input-group">
+                <input type="text" name="query" class="form-control" aria-label="Text input with segmented dropdown button">
+                <div class="input-group-append">
+                    <input type="submit" value="Search" class='btn btn-primary' placeholder="Search anything">
+                    <select class="custom-select" name="sortBy">
+                        <option value="expirydate">Soonest Expiry</option>
+                        <option value="pricelowhigh">Price Low to High</option>
+                        <option value="pricehighlow">Price High to Low</option>
+                    </select>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
     <div class="row my-4">
     <div class="col-sm-5">
-        <img id="item-display" src="<?php echo url_for('/html/' . $item_details['image_location']) ?> " height="375" width="450" alt=""/>
+        <img id="item-display" src="<?php echo url_for('/html/' . $item_details['image_location']) ?> " width="450" alt=""/>
     </div>
 
     <div class="col-sm-7">
@@ -395,7 +396,7 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
                             from listing
                             inner join item on item.item_id  = listing.item_id
                             where listing.listing_id = $recommendation_id";
-                    // TODO: Remember to add where clause for if the listing is active
+
                     $recommendation = mysqli_query($db, $query);
 
                     if ($recommendation -> num_rows == 0) {
@@ -410,7 +411,7 @@ $bid_set = get_list_of_bids($db, $_GET['listing_id']);  // uses the function cre
                          <div class="col-lg-3">
                             <div class="card h-50">
                                 
-                                <img src="' . url_for("/html/" . $recommendation["image_location"]) . '" class="card-img-top" width="250" height="125" alt="item image"></a>
+                                <img src="' . url_for("/html/" . $recommendation["image_location"]) . '" class="card-img-top" width="250" alt="item image"></a>
                                 <div class="card-body">
                                 <h4 class="card-title">
                                 <a href="' . url_for("/html/product_listing.php?item_id=" . $recommendation['item_id'] . "&listing_id=" . $recommendation['listing_id']) . '">' . $recommendation['item_name'] . '</a>

@@ -39,9 +39,13 @@
 
             <h1 class="my-4">A-Bay</h1>
             <div class="list-group">
-                <a href="#" class="list-group-item">Category 1</a>
-                <a href="#" class="list-group-item">Category 2</a>
-                <a href="#" class="list-group-item">Category 3</a>
+                <a href="<?php echo url_for("/html/search_results.php?query=electronics&sortBy=expirydate") ?>" class="list-group-item">Electronics</a>
+                <a href="<?php echo url_for("/html/search_results.php?query=Gaming&sortBy=expirydate") ?>" class="list-group-item">Gaming</a>
+                <a href="<?php echo url_for("/html/search_results.php?query=Fashion&sortBy=expirydate") ?>" class="list-group-item">Fashion</a>
+                <a href="<?php echo url_for("/html/search_results.php?query=Entertainment&sortBy=expirydate") ?>" class="list-group-item">Entertainment</a>
+                <a href="<?php echo url_for("/html/search_results.php?query=Books&sortBy=expirydate") ?>" class="list-group-item">Books</a>
+                <a href="<?php echo url_for("/html/search_results.php?query=Sports&sortBy=expirydate") ?>" class="list-group-item">Sports</a>
+                <a href="<?php echo url_for("/html/search_results.php?query=Other&sortBy=expirydate") ?>" class="list-group-item">Other</a>
             </div>
 
         </div>
@@ -54,10 +58,10 @@
                         <input type="text" name="query" class="form-control" aria-label="Text input with segmented dropdown button">
                         <div class="input-group-append">
                             <input type="submit" value="Search" class='btn btn-primary' placeholder="Search anything">
-                            <select class="custom-select" name="searchOrder">
-                                <option value="X">Soonest Expiry</option>
-                                <option value="H">Price Low to High</option>
-                                <option value="L">Price High to Low</option>
+                            <select class="custom-select" name="sortBy">
+                                <option value="expirydate">Soonest Expiry</option>
+                                <option value="pricelowhigh">Price Low to High</option>
+                                <option value="pricehighlow">Price High to Low</option>
                             </select>
                         </div>
                     </div>
@@ -82,7 +86,7 @@
                     echo '
                     <div class="col">
                     <div class="card h-50">
-                        <img class="card-img-top" src="' . url_for("/html/" . $res["image_location"]) . '" alt="">
+                        <img class="card-img-top" width="250" src="' . url_for("/html/" . $res["image_location"]) . '" alt="">
                         <div class="card-body">
                             <h4 class="card-title">
                                 <a href="' . url_for("/html/product_listing.php?item_id=" . $res['item_id'] . "&listing_id=" . $res['listing_id']) . '">' . $res['item_name'] . '</a>
